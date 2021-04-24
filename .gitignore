@@ -27,4 +27,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # Heavy File
-src/assets/video
+src/assets/video/
