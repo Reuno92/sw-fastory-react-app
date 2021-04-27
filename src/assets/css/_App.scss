@@ -1,0 +1,17 @@
+html, body {
+  background: #333;
+  color: white;
+}
+
+input.form-control, select {
+  border-color: #555;
+  background-color: #333;
+  color: whitesmoke;
+  &:hover {
+    background-color: #444;
+  }
+  &:focus {
+    background-color: #333;
+    color: white;
+  }
+}

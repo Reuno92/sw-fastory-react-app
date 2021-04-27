@@ -1,4 +1,18 @@
 @import "~bootstrap/scss/bootstrap";
 
+a {
+  &:hover{
+    text-decoration: none;
+  }
+}
+
 @import "App";
+@import "Header";
 @import "Login";
+@import "searchInput";
+@import "table";
+
+
+
+
+@import "responsive";

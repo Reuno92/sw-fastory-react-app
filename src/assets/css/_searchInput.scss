@@ -1,0 +1,10 @@
+.input-group-select {
+  border-radius: 0;
+  border-width: 1px;
+  border-style: solid;
+  padding: 0 1rem;
+}
+
+.input-group > .input-group-append {
+  border-radius: 5px 0 0 5px;
+}
