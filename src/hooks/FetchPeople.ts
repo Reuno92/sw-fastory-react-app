@@ -1,48 +1,62 @@
 import {useCallback, useReducer} from "react";
-import {ResponseV1Models} from "../models/api/Response.v1.models";
-import {PlanetsV1Models} from "../models/api/Planets.v1.models";
-import {PeopleV1Models} from "../models/api/People.v1.models";
-import {FilmsV1Models} from "../models/api/Films.v1.models";
-import {StarshipsV1Models} from "../models/api/Starships.v1.models";
-import {VehiclesV1Models} from "../models/api/Vehicles.v1.models";
-import {SpeciesV1Models} from "../models/api/Species.v1.models";
+import {
+    ResponseV1Models,
+    PlanetsV1Models,
+    PeopleV1Models,
+    FilmsV1Models,
+    StarshipsV1Models,
+    VehiclesV1Models,
+    SpeciesV1Models
+} from "../models/api";
 import {httpReducer, initialState} from "../reducers/Http.reducer";
 
 export const FetchPeople = () => {
 
     const [httpState, dispatchHtp] = useReducer(httpReducer, initialState);
-    const clear = useCallback( () => dispatchHtp({type: "CLEAR"}), []);
+    const clear = useCallback(() => dispatchHtp({type: "CLEAR"}), []);
 
-    const sendRequest = useCallback( async (uri: string, method: string, body?: any) => {
+    const sendRequest = useCallback(async (uri: string, method: string, body?: any) => {
 
         const res = await fetch(uri, {
             method: method,
             headers: {
-                "Content-Type"  : "application/json; charset=utf-8",
-                "Accept"        : "application/json",
+                "Content-Type": "application/json; charset=utf-8",
+                "Accept": "application/json",
             }
         })
 
         let resJSON: ResponseV1Models<PeopleV1Models> = await res.json()
-            .catch( (): void => {
-                dispatchHtp({ type: "ERROR", errorMessage: 'Something went wrong!'})
+            .catch((): void => {
+                dispatchHtp({type: "ERROR", errorMessage: 'Something went wrong!'})
             });
 
         const resFilms: Array<Array<Promise<any>>> = resJSON.results.map(
-                (people: PeopleV1Models) => people.films.map(
-                    (film: string) => fetch(film, {
-                        method: 'GET'
-                    }).then(x => x.json())
-                      .then((data: FilmsV1Models) => data.title)
+            (people: PeopleV1Models) => people.films.map(
+                (film: string) => fetch(film, {
+                    method: 'GET'
+                }).then(x => x.json())
+                    .then((data: FilmsV1Models) => data.title)
+                    .catch((): void => {
+                        dispatchHtp({
+                            type: "ERROR",
+                            errorMessage: 'Something went wrong during call api for search films.'
+                        })
+                    })
             )
         );
 
         const resSpecies = await resJSON.results.map(
             (people: PeopleV1Models) => people.species.map(
-                (specie: string ) => fetch(specie, {
+                (specie: string) => fetch(specie, {
                     method: 'GET'
                 }).then(x => x.json())
-                  .then( (data: SpeciesV1Models) => data.name)
+                    .then((data: SpeciesV1Models) => data.name)
+                    .catch((): void => {
+                        dispatchHtp({
+                            type: "ERROR",
+                            errorMessage: 'Something went wrong during call api for search species.'
+                        })
+                    })
             )
         );
 
@@ -51,7 +65,13 @@ export const FetchPeople = () => {
                 (starship: string) => fetch(starship, {
                     method: 'GET'
                 }).then(res => res.json())
-                  .then( (data: StarshipsV1Models) => data.name)
+                    .then((data: StarshipsV1Models) => data.name)
+                    .catch((): void => {
+                        dispatchHtp({
+                            type: "ERROR",
+                            errorMessage: 'Something went wrong during call api for search starships.'
+                        })
+                    })
             )
         );
 
@@ -60,28 +80,40 @@ export const FetchPeople = () => {
                 (vehicle: string) => fetch(vehicle, {
                     method: 'GET'
                 }).then(res => res.json())
-                  .then( ( data: VehiclesV1Models) => data.name)
+                    .then((data: VehiclesV1Models) => data.name)
+                    .catch((): void => {
+                        dispatchHtp({
+                            type: "ERROR",
+                            errorMessage: 'Something went wrong during call api for search vehicles.'
+                        })
+                    })
             )
         );
 
         const resPlanet: Array<Promise<any>> = await resJSON.results.flatMap(
             (people: PeopleV1Models) => fetch(people.homeworld, {
                 method: 'GET'
-            }).then( res => res.json())
-              .then( (data: PlanetsV1Models) => data.name)
+            }).then(res => res.json())
+                .then((data: PlanetsV1Models) => data.name)
+                .catch((): void => {
+                    dispatchHtp({
+                        type: "ERROR",
+                        errorMessage: 'Something went wrong during call api for search planets.'
+                    })
+                })
         );
 
-        const FILMS      = await Promise.all(resFilms.map( async inner => await Promise.all(inner)));
-        const SPECIES    = await Promise.all(resSpecies.map( async inner => await Promise.all(inner)));
-        const STARSHIPS  = await Promise.all(resStarships.map( async inner => await Promise.all(inner)));
-        const VEHICLES   = await Promise.all(resVehicles.map( async inner => await Promise.all(inner)));
+        const FILMS = await Promise.all(resFilms.map(async inner => await Promise.all(inner)));
+        const SPECIES = await Promise.all(resSpecies.map(async inner => await Promise.all(inner)));
+        const STARSHIPS = await Promise.all(resStarships.map(async inner => await Promise.all(inner)));
+        const VEHICLES = await Promise.all(resVehicles.map(async inner => await Promise.all(inner)));
         const HOME_WORLD = await Promise.all(resPlanet);
 
         let data: ResponseV1Models<PeopleV1Models> = {
             count: resJSON.count,
             previous: resJSON.previous,
             next: resJSON.next,
-            results: resJSON.results.map( (x: PeopleV1Models, index: number) => {
+            results: resJSON.results.map((x: PeopleV1Models, index: number) => {
                 return {
                     name: x.name,
                     birth_year: x.birth_year,

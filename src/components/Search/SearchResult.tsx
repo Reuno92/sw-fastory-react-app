@@ -1,12 +1,7 @@
 import {Fragment, PropsWithChildren, useEffect} from "react";
 import FetchApi from "../../hooks/FetchPeople";
 import {Alert, Table} from "react-bootstrap";
-import {PeopleV1Models} from "../../models/api/People.v1.models";
-import {PlanetsV1Models} from "../../models/api/Planets.v1.models";
-import {FilmsV1Models} from "../../models/api/Films.v1.models";
-import {SpeciesV1Models} from "../../models/api/Species.v1.models";
-import {StarshipsV1Models} from "../../models/api/Starships.v1.models";
-import {VehiclesV1Models} from "../../models/api/Vehicles.v1.models";
+import {PeopleV1Models, PlanetsV1Models, FilmsV1Models, SpeciesV1Models, StarshipsV1Models, VehiclesV1Models} from "../../models/api";
 
 type SearchResultType = {
     previous: string,
