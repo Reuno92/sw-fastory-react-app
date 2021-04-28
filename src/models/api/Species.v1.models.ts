@@ -16,12 +16,13 @@ export class SpeciesV1Models {
    * @param { string } skin_colors - A comma-separated string of common skin colors for this species, "none" if this species does not typically have skin.
    * @param { string } language - The language commonly spoken by this species.
    * @param { string } homeworld - The URL of a planet resource, a planet that this species originates from.
-   * @param { string } people - An array of People URL Resources that are a part of this species.
-   * @param { string } films - An array of Film URL Resources that this species has appeared in.
+   * @param { Array<string> } people - An array of People URL Resources that are a part of this species.
+   * @param { Array<string> } films - An array of Film URL Resources that this species has appeared in.
    * @param { string } url - The hypermedia URL of this resource.
    * @param { string } created - The ISO 8601 date format of the time that this resource was created.
    * @param { string } edited - The ISO 8601 date format of the time that this resource was edited.
    */
+
   constructor(
     public name: string,
     public classification: string,
@@ -33,8 +34,8 @@ export class SpeciesV1Models {
     public skin_colors: string,
     public language: string,
     public homeworld: string,
-    public people: string,
-    public films: string,
+    public people: Array<string>,
+    public films: Array<string>,
     public url: string,
     public created: string,
     public edited: string

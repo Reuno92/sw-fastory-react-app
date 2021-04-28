@@ -1,5 +1,5 @@
 import {Fragment, PropsWithChildren, useEffect} from "react";
-import FetchApi from "../../hooks/FetchPeople";
+import FetchApi from "../../hooks/FetchSearchApi";
 import {Alert, Table} from "react-bootstrap";
 import {PeopleV1Models, PlanetsV1Models, FilmsV1Models, SpeciesV1Models, StarshipsV1Models, VehiclesV1Models} from "../../models/api";
 
@@ -47,9 +47,9 @@ const SearchResult = (props: PropsWithChildren<any>) => {
     }
 
     return (
-        <Fragment>
+        <section className="container">
             {
-                results && !firstTime && results.length === 0 && (
+                results && results.count === 0 && (
                     <Alert variant="warning" className="mt-4 mb-3">
                         <strong>Oups!</strong> Nothing was found.
                     </Alert>
@@ -72,7 +72,7 @@ const SearchResult = (props: PropsWithChildren<any>) => {
             }
             {
                 results.results && !isLoading && results.results.length > 0 && (
-                    <section className="container">
+                    <Fragment>
                         <section className="d-flex justify-content-between">
                             <small>Items found: {results.count}</small>
 
@@ -111,6 +111,17 @@ const SearchResult = (props: PropsWithChildren<any>) => {
                                         </Fragment>
                                     )
                                 }
+                                {
+                                    isPlanets(results.results[0]) && (
+                                        <Fragment>
+                                            <th>Diameter (km)</th>
+                                            <th>Population</th>
+                                            <th>Films</th>
+                                            <th>Created</th>
+                                            <th>Edited</th>
+                                        </Fragment>
+                                    )
+                                }
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -134,8 +145,9 @@ const SearchResult = (props: PropsWithChildren<any>) => {
                                         {
                                             isPlanets(results.results[0]) && (
                                                 <Fragment>
-                                                    <td>{result.birth_year}</td>
-                                                    <td>{result.gender}</td>
+                                                    <td>{result.diameter}</td>
+                                                    <td>{result.population}</td>
+                                                    <td>{result.films.join(', ')}</td>
                                                     <td>{result.created.split('T')[0]}</td>
                                                     <td>{result.edited.split('T')[0]}</td>
                                                 </Fragment>
@@ -175,10 +187,10 @@ const SearchResult = (props: PropsWithChildren<any>) => {
                             */}
 
                         </section>
-                    </section>
+                    </Fragment>
                 )
             }
-        </Fragment>
+        </section>
     )
 };
 

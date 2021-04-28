@@ -4,7 +4,7 @@ import React, {
     useCallback, useEffect,
 } from "react";
 import {Alert, Spinner} from "react-bootstrap";
-import FetchApi from "../../hooks/FetchPeople";
+import FetchSearchApi from "../../hooks/FetchSearchApi";
 
 type SearchInputProps = {
     onLoadedResults: any;
@@ -20,7 +20,7 @@ const SearchInput: React.MemoExoticComponent<(props: PropsWithChildren<SearchInp
             const [userError, setUserError] = useState(false);
 
             const inputField = React.useRef() as React.MutableRefObject<HTMLInputElement>;
-            const {sendRequest, data, isLoading} = FetchApi();
+            const {sendRequest, data, isLoading} = FetchSearchApi();
 
             const enterHandler = (e: React.KeyboardEvent<HTMLInputElement>): void => {
                 if (e.key === "Enter") {
@@ -36,8 +36,8 @@ const SearchInput: React.MemoExoticComponent<(props: PropsWithChildren<SearchInp
             const submitHandler = useCallback(() => {
                     setUserError(false);
 
-                    if (term.length > 3) {
-                        sendRequest(`http://localhost:7000/api/v1/${entity}/?search=${term.trim()}`, "GET");
+                    if (term.length >= 3) {
+                        sendRequest(`http://localhost:7000/api/v1/${entity}?search=${term.trim()}`, "GET", entity);
                     } else {
                         setUserError(true);
                     }
@@ -129,12 +129,11 @@ const SearchInput: React.MemoExoticComponent<(props: PropsWithChildren<SearchInp
                         </small>
                         {
                             userError && (
-                                <Alert variant="danger" className="mt-4 mb-3">Your search term must contains more 3
+                                <Alert variant="danger" className="mt-4 mb-3">Your search term must contains more 2
                                     characters</Alert>
                             )
                         }
                     </section>
-
                 </React.Fragment>
             )
         }
