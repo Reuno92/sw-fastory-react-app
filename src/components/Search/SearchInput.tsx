@@ -1,17 +1,16 @@
 import React, {
-    useState,
-    PropsWithChildren,
-    useCallback, useEffect,
+    useState, useCallback, useEffect,
 } from "react";
 import {Alert, Spinner} from "react-bootstrap";
 import FetchSearchApi from "../../hooks/FetchSearchApi";
+import { OptionsSelect } from "../../models/optionsSelect";
 
 type SearchInputProps = {
     onLoadedResults: any;
 }
 
-const SearchInput: React.MemoExoticComponent<(props: PropsWithChildren<SearchInputProps>) => JSX.Element> =
-    React.memo((props: PropsWithChildren<SearchInputProps>): JSX.Element => {
+const SearchInput: React.MemoExoticComponent<(props: React.PropsWithChildren<SearchInputProps>) => JSX.Element> =
+    React.memo((props: React.PropsWithChildren<SearchInputProps>): JSX.Element => {
 
             const {onLoadedResults} = props;
 
@@ -42,10 +41,9 @@ const SearchInput: React.MemoExoticComponent<(props: PropsWithChildren<SearchInp
                         setUserError(true);
                     }
 
-                }, [term, entity, sendRequest]
-            );
+                }, [term, entity, sendRequest] );
 
-            const options: Array<{ label: string, value: string }> = [
+            const options: Array<OptionsSelect> = [
                 {
                     label: "People",
                     value: "people",
@@ -109,9 +107,9 @@ const SearchInput: React.MemoExoticComponent<(props: PropsWithChildren<SearchInp
                                 value={entity}
                                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setEntity(e.target.value)}>
                                 {
-                                    options.map((x: { label: string, value: string }, index: number) => (
-                                        <option key={index} value={x.value}>{x.label}</option>
-                                    ))
+                                    options.map( (option: OptionsSelect, index: number) => (
+                                        <option key={index} value={option.value}>{option.label}</option>
+                                    ) )
                                 }
                             </select>
                             <input

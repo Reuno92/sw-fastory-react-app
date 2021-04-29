@@ -1,7 +1,7 @@
 /**
- * Options for HTML Select Element Model
+ * OptionsSelect for HTML Select Element Model
  */
-export class Options {
+export class OptionsSelect {
 
     /**
      * @param { string } label - Option's Label
