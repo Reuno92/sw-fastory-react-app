@@ -460,7 +460,7 @@ export const FetchSearchApi = () => {
                             passengers: x.passengers,
                             max_atmosphering_speed: x.max_atmosphering_speed,
                             cargo_capacity: x.cargo_capacity,
-                            consumable: x.consumable,
+                            consumables: x.consumables,
                             films: FILM_INTO_VEHICLES[index],
                             pilots: PEOPLE_INTO_VEHICLES[index],
                             url: x.url,
