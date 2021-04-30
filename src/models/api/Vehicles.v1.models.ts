@@ -17,8 +17,8 @@ export class VehiclesV1Models {
    * @param { string } max_atmosphering_speed - The maximum speed of this vehicle in the atmosphere.
    * @param { string } cargo_capacity - The maximum number of kilograms that this vehicle can transport.
    * @param { string } consumables - The maximum length of time that this vehicle can provide consumables for its entire crew without having to resupply.
-   * @param { string } films - An array of Film URL Resources that this vehicle has appeared in.
-   * @param { string } pilots - An array of People URL Resources that this vehicle has been piloted by.
+   * @param { Array<string> } films - An array of Film URL Resources that this vehicle has appeared in.
+   * @param { Array<string> } pilots - An array of People URL Resources that this vehicle has been piloted by.
    * @param { string } url - The hypermedia URL of this resource.
    * @param { string } created - The ISO 8601 date format of the time that this resource was created.
    * @param { string } edited - The ISO 8601 date format of the time that this resource was edited.
@@ -34,9 +34,9 @@ export class VehiclesV1Models {
     public passengers: string,
     public max_atmosphering_speed: string,
     public cargo_capacity: string,
-    public consumable: string,
-    public films: string,
-    public pilots: string,
+    public consumables: string,
+    public films: Array<string>,
+    public pilots: Array<string>,
     public url: string,
     public created: string,
     public edited: string

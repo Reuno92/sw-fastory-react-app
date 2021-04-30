@@ -23,7 +23,7 @@ export class StarshipsV1Models {
    * @param { Array<string> } pilots - An array of People URL Resources that this starship has been piloted by.
    * @param { string } url - The hypermedia URL of this resource.
    * @param { string } created - The ISO 8601 date format of the time that this resource was created.
-   * @param { string } updated - The ISO 8601 date format of the time that this resource was edited.
+   * @param { string } edited - The ISO 8601 date format of the time that this resource was edited.
    */
   constructor(
     public name: string,
@@ -43,6 +43,6 @@ export class StarshipsV1Models {
     public pilots: Array<string>,
     public url: string,
     public created: string,
-    public updated: string
+    public edited: string
   ) {}
 }
