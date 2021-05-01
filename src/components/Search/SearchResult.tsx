@@ -4,15 +4,12 @@ import {Alert, Table} from "react-bootstrap";
 import {PeopleV1Models, PlanetsV1Models, FilmsV1Models, SpeciesV1Models, StarshipsV1Models, VehiclesV1Models} from "../../models/api";
 
 type SearchResultType = {
-    previous: string,
-    next: string,
-    count: number,
-    result: Array<any>,
+    results: any
 }
 
-const SearchResult = (props: PropsWithChildren<any>) => {
-    const {isLoading, error, firstTime} = FetchApi();
-    const {results} = props;
+const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
+    const { isLoading, error } = FetchApi();
+    const { results } = props;
 
     const isPeople = (obj: any): obj is PeopleV1Models => {
         return obj.hair_color !== undefined
@@ -27,7 +24,7 @@ const SearchResult = (props: PropsWithChildren<any>) => {
     }
 
     const isSpecies = (obj: any): obj is SpeciesV1Models => {
-        return obj.title !== undefined
+        return obj.average_height !== undefined
     }
 
     const isStarships = (obj: any): obj is StarshipsV1Models => {
@@ -65,8 +62,7 @@ const SearchResult = (props: PropsWithChildren<any>) => {
             {
                 results && !isLoading && results.length >= 10 && (
                     <Alert variant="warning" className="mt-4 mb-3">
-                        <strong>Awwww!</strong> Your results is too large (more 10 items), you could precise your
-                        search.
+                        <strong>Awwww!</strong> Your results is too large (more 10 items), you could precise your search.
                     </Alert>
                 )
             }
@@ -98,10 +94,10 @@ const SearchResult = (props: PropsWithChildren<any>) => {
                         <Table borderless striped hover className="text-white">
                             <thead>
                             <tr>
-                                <th>Name</th>
                                 {
                                     isPeople(results.results[0]) && (
                                         <Fragment>
+                                            <th>Name</th>
                                             <th>Birth&nbsp;Year</th>
                                             <th>Gender</th>
                                             <th>Origin</th>
@@ -114,9 +110,61 @@ const SearchResult = (props: PropsWithChildren<any>) => {
                                 {
                                     isPlanets(results.results[0]) && (
                                         <Fragment>
+                                            <th>Name</th>
                                             <th>Diameter (km)</th>
                                             <th>Population</th>
                                             <th>Films</th>
+                                            <th>Created</th>
+                                            <th>Edited</th>
+                                        </Fragment>
+                                    )
+                                }
+                                {
+                                    isFilms(results.results[0]) && (
+                                        <Fragment>
+                                            <th>Title</th>
+                                            <th>Release Date</th>
+                                            <th>Director</th>
+                                            <th>Producer</th>
+                                            <th>Species</th>
+                                            <th>Created</th>
+                                            <th>Edited</th>
+                                        </Fragment>
+                                    )
+                                }
+                                {
+                                    isSpecies(results.results[0]) && (
+                                        <Fragment>
+                                            <th>Name</th>
+                                            <th>Classification</th>
+                                            <th>Sentient</th>
+                                            <th>Language</th>
+                                            <th>Created</th>
+                                            <th>Edited</th>
+                                        </Fragment>
+                                    )
+                                }
+                                {
+                                    isStarships(results.results[0]) && (
+                                        <Fragment>
+                                            <th>Name</th>
+                                            <th>Model</th>
+                                            <th>Manufacturer</th>
+                                            <th>Cost&nbsp;in&nbsp;credits</th>
+                                            <th>Length</th>
+                                            <th>Created</th>
+                                            <th>Edited</th>
+                                        </Fragment>
+                                    )
+                                }
+                                {
+                                    isVehicles(results.results[0]) && (
+                                        <Fragment>
+                                            <th>Name</th>
+                                            <th>Model</th>
+                                            <th>Manufacturer</th>
+                                            <th>Cost&nbsp;in&nbsp;credits</th>
+                                            <th>Length</th>
                                             <th>Created</th>
                                             <th>Edited</th>
                                         </Fragment>
@@ -127,39 +175,126 @@ const SearchResult = (props: PropsWithChildren<any>) => {
                             </thead>
                             <tbody>
                             {
-                                results.results.map((result: any, index: number) => (
-                                    <tr key={result.name}>
-                                        <td>{result.name}</td>
+                                results.results.map((result: any) => (
+                                    <tr key={result?.name || result?.title}>
+
                                         {
                                             isPeople(results.results[0]) && (
                                                 <Fragment>
-                                                    <td>{result.birth_year}</td>
-                                                    <td>{firstLetter(result.gender)}</td>
-                                                    <td>{result.homeworld}</td>
-                                                    <td>{result.films.join(', ')}</td>
-                                                    <td>{result.created.split('T')[0]}</td>
-                                                    <td>{result.edited.split('T')[0]}</td>
+                                                    <td>{result?.name}</td>
+                                                    <td>{result?.birth_year}</td>
+                                                    <td>{firstLetter(result?.gender)}</td>
+                                                    <td>{result?.homeworld}</td>
+                                                    <td>{result?.films.join(', ')}</td>
+                                                    <td>{result?.created.split('T')[0]}</td>
+                                                    <td>{result?.edited.split('T')[0]}</td>
+                                                    <td>
+                                                        <button
+                                                            className="btn btn-primary"
+                                                            onClick={() => console.log(result.url)}>
+                                                            See
+                                                        </button>
+                                                    </td>
                                                 </Fragment>
                                             )
                                         }
                                         {
                                             isPlanets(results.results[0]) && (
                                                 <Fragment>
-                                                    <td>{result.diameter}</td>
-                                                    <td>{result.population}</td>
-                                                    <td>{result.films.join(', ')}</td>
-                                                    <td>{result.created.split('T')[0]}</td>
-                                                    <td>{result.edited.split('T')[0]}</td>
+                                                    <td>{result?.name}</td>
+                                                    <td>{result?.diameter}</td>
+                                                    <td>{result?.population}</td>
+                                                    <td>{result?.films.join(', ')}</td>
+                                                    <td>{result?.created.split('T')[0]}</td>
+                                                    <td>{result?.edited.split('T')[0]}</td>
+                                                    <td>
+                                                        <button
+                                                            className="btn btn-primary"
+                                                            onClick={() => console.log(result.url)}>
+                                                            See
+                                                        </button>
+                                                    </td>
                                                 </Fragment>
                                             )
                                         }
-                                        <td>
-                                            <button
-                                                className="btn btn-primary"
-                                                onClick={() => console.log(result.url)}>
-                                                See
-                                            </button>
-                                        </td>
+                                        {
+                                            isFilms(results.results[0]) && (
+                                                <Fragment>
+                                                    <td>{result?.title}</td>
+                                                    <td>{result?.release_date}</td>
+                                                    <td>{result?.director}</td>
+                                                    <td>{result?.producer}</td>
+                                                    <td>{result?.created.split('T')[0]}</td>
+                                                    <td>{result?.edited.split('T')[0]}</td>
+                                                    <td>
+                                                        <button
+                                                            className="btn btn-primary"
+                                                            onClick={() => console.log(result.url)}>
+                                                            See
+                                                        </button>
+                                                    </td>
+                                                </Fragment>
+                                            )
+                                        }
+                                        {
+                                            isSpecies(results.results[0]) && (
+                                                <Fragment>
+                                                    <td>{result?.name}</td>
+                                                    <td>{result?.classification}</td>
+                                                    <td>{result?.designation}</td>
+                                                    <td>{result?.language}</td>
+                                                    <td>{result?.created.split('T')[0]}</td>
+                                                    <td>{result?.edited.split('T')[0]}</td>
+                                                    <td>
+                                                        <button
+                                                            className="btn btn-primary"
+                                                            onClick={() => console.log(result.url)}>
+                                                            See
+                                                        </button>
+                                                    </td>
+                                                </Fragment>
+                                            )
+                                        }
+                                        {
+                                            isStarships(results.results[0]) && (
+                                                <Fragment>
+                                                    <td>{result?.name}</td>
+                                                    <td>{result?.model}</td>
+                                                    <td>{result?.manufacturer}</td>
+                                                    <td>{result?.cost_in_credits}</td>
+                                                    <td>{result?.length}</td>
+                                                    <td>{result?.created.split('T')[0]}</td>
+                                                    <td>{result?.edited.split('T')[0]}</td>
+                                                    <td>
+                                                        <button
+                                                            className="btn btn-primary"
+                                                            onClick={() => console.log(result.url)}>
+                                                            See
+                                                        </button>
+                                                    </td>
+                                                </Fragment>
+                                            )
+                                        }
+                                        {
+                                            isVehicles(results.results[0]) && (
+                                                <Fragment>
+                                                    <td>{result?.name}</td>
+                                                    <td>{result?.model}</td>
+                                                    <td>{result?.manufacturer}</td>
+                                                    <td>{result?.cost_in_credits}</td>
+                                                    <td>{result?.length}</td>
+                                                    <td>{result?.created}</td>
+                                                    <td>{result?.edited}</td>
+                                                    <td>
+                                                        <button
+                                                            className="btn btn-primary"
+                                                            onClick={() => console.log(result.url)}>
+                                                            See
+                                                        </button>
+                                                    </td>
+                                                </Fragment>
+                                            )
+                                        }
                                     </tr>
                                 ))
                             }

@@ -4,6 +4,7 @@
  * A Vehicle resource is a single transport craft that does not have hyperdrive capability.
  */
 export class VehiclesV1Models {
+
   /**
    *
    * @param { string } name - The name of this vehicle. The common name, such as "Sand Crawler" or "Speeder bike".
@@ -23,6 +24,7 @@ export class VehiclesV1Models {
    * @param { string } created - The ISO 8601 date format of the time that this resource was created.
    * @param { string } edited - The ISO 8601 date format of the time that this resource was edited.
    */
+
   constructor(
     public name: string,
     public model: string,

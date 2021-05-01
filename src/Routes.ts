@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import Login from "./components/Login";
 import Search from "./components/Search";
-import {Route} from "react-router-dom";
 
 export interface AppRoute {
     name: string,

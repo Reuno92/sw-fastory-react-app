@@ -127,8 +127,9 @@ const SearchInput: React.MemoExoticComponent<(props: React.PropsWithChildren<Sea
                         </small>
                         {
                             userError && (
-                                <Alert variant="danger" className="mt-4 mb-3">Your search term must contains more 2
-                                    characters</Alert>
+                                <Alert variant="danger" className="mt-4 mb-3">
+                                    Your search term must contains more 2 characters
+                                </Alert>
                             )
                         }
                     </section>

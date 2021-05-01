@@ -16,7 +16,7 @@ const Search: React.FC = () => {
         }
     }
 
-    const [error, setError] = useState("");
+    const [error] = useState("");
 
     const [userResults, dispatchResults] = useReducer(resultsReducer, []);
 

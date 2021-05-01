@@ -23,7 +23,7 @@ export const FetchSearchApi = () => {
                 "Content-Type": "application/json; charset=utf-8",
                 "Accept": "application/json",
             }
-        })
+        });
 
         switch (entity) {
             case 'people':
@@ -209,6 +209,7 @@ export const FetchSearchApi = () => {
                 break;
 
             case 'films':
+
                 let resJSONFilms: ResponseV1Models<FilmsV1Models> = await res.json()
                     .catch((): void => {
                         dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong!'})
@@ -358,7 +359,6 @@ export const FetchSearchApi = () => {
                 break;
 
             case 'starships':
-
                 const resJSONStarships: ResponseV1Models<StarshipsV1Models> = await res.json()
                     .catch((): void => {
                         dispatchHttp({type: "ERROR", errorMessage: "Something went wrong."});
@@ -417,20 +417,20 @@ export const FetchSearchApi = () => {
                 break;
 
             case 'vehicles':
-
                 let resJSONVehicles: ResponseV1Models<VehiclesV1Models> = await res.json()
                     .catch((): void => {
                         dispatchHttp({type: "ERROR", errorMessage: "Something went wrong."});
                     });
 
                 const resFilmsVehicles: Array<Array<Promise<any>>> = resJSONVehicles.results.map(
-                    (vehicles: VehiclesV1Models) => vehicles.films.map(
+                    (vehicle: VehiclesV1Models) => vehicle.films.map(
                         (film: string) => fetch(film, {
                             method: 'GET'
                         }).then(res => res.json())
                             .then((data: FilmsV1Models) => data.title)
+                            .then( (test: string) => console.log(test) )
                     )
-                )
+                );
 
                 const resPeopleVehicles: Array<Array<Promise<any>>> = resJSONVehicles.results.map(
                     (vehicles: VehiclesV1Models) => vehicles.pilots.map(
@@ -438,8 +438,9 @@ export const FetchSearchApi = () => {
                             method: 'GET'
                         }).then(res => res.json())
                             .then((data: PeopleV1Models) => data.name)
+                            .then( (test: string) => console.log(test) )
                     )
-                )
+                );
 
                 const FILM_INTO_VEHICLES = await Promise.all(resFilmsVehicles.map( async inner => await Promise.all( inner ) ));
                 const PEOPLE_INTO_VEHICLES = await Promise.all(resPeopleVehicles.map( async inner => await Promise.all( inner ) ));
@@ -470,7 +471,7 @@ export const FetchSearchApi = () => {
                     })
                 }
 
-                dispatchHttp({ type: "ERROR", message: DATA_VEHICLES });
+                dispatchHttp({ type: "RESPONSE", message: DATA_VEHICLES });
                 break;
 
             default:
