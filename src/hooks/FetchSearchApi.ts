@@ -29,7 +29,7 @@ export const FetchSearchApi = () => {
             case 'people':
                 let resJSONPeople: ResponseV1Models<PeopleV1Models> = await res.json()
                     .catch((): void => {
-                        dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong!'})
+                        dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with People !'})
                     });
 
                 const resFilmsPeople: Array<Array<Promise<any>>> = resJSONPeople.results.map(
@@ -145,7 +145,7 @@ export const FetchSearchApi = () => {
 
                 let resJSONPlanets: ResponseV1Models<PlanetsV1Models> = await res.json()
                     .catch((): void => {
-                        dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong!'})
+                        dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with People !'})
                     });
 
                 const resFilmsPlanets: Array<Array<Promise<any>>> = resJSONPlanets.results.map(
@@ -212,7 +212,7 @@ export const FetchSearchApi = () => {
 
                 let resJSONFilms: ResponseV1Models<FilmsV1Models> = await res.json()
                     .catch((): void => {
-                        dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong!'})
+                        dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with Films !'})
                     });
 
                 const resSpeciesFilms: Array<Array<Promise<any>>> = resJSONFilms.results.map(
@@ -298,7 +298,7 @@ export const FetchSearchApi = () => {
 
                 let resJSONSpecies: ResponseV1Models<SpeciesV1Models> = await res.json()
                     .catch((): void => {
-                        dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong!'})
+                        dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with Species !'})
                     });
 
                 const resPeopleSpecies: Array<Array<Promise<any>>> = resJSONSpecies.results.map(
@@ -361,7 +361,7 @@ export const FetchSearchApi = () => {
             case 'starships':
                 const resJSONStarships: ResponseV1Models<StarshipsV1Models> = await res.json()
                     .catch((): void => {
-                        dispatchHttp({type: "ERROR", errorMessage: "Something went wrong."});
+                        dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with Starpships !'});
                     })
 
                 const resFilmsStarship: Array<Array<Promise<any>>> = resJSONStarships.results.map(
@@ -419,7 +419,7 @@ export const FetchSearchApi = () => {
             case 'vehicles':
                 let resJSONVehicles: ResponseV1Models<VehiclesV1Models> = await res.json()
                     .catch((): void => {
-                        dispatchHttp({type: "ERROR", errorMessage: "Something went wrong."});
+                        dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with Vehicles !'});
                     });
 
                 const resFilmsVehicles: Array<Array<Promise<any>>> = resJSONVehicles.results.map(
