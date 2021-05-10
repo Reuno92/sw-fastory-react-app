@@ -3,7 +3,7 @@ import React, {
 } from "react";
 import {Alert, Spinner} from "react-bootstrap";
 import FetchSearchApi from "../../hooks/FetchSearchApi";
-import { OptionsSelect } from "../../models/optionsSelect";
+import { OptionsSelectModel } from "../../models/optionsSelect.model";
 
 type SearchInputProps = {
     onLoadedResults: any;
@@ -43,7 +43,7 @@ const SearchInput: React.MemoExoticComponent<(props: React.PropsWithChildren<Sea
 
                 }, [term, entity, sendRequest] );
 
-            const options: Array<OptionsSelect> = [
+            const options: Array<OptionsSelectModel> = [
                 {
                     label: "People",
                     value: "people",
@@ -107,7 +107,7 @@ const SearchInput: React.MemoExoticComponent<(props: React.PropsWithChildren<Sea
                                 value={entity}
                                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setEntity(e.target.value)}>
                                 {
-                                    options.map( (option: OptionsSelect, index: number) => (
+                                    options.map( (option: OptionsSelectModel, index: number) => (
                                         <option key={index} value={option.value}>{option.label}</option>
                                     ) )
                                 }
