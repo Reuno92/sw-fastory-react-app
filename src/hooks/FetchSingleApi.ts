@@ -2,13 +2,13 @@ import {useCallback, useReducer} from "react";
 import {httpReducer, initialState} from "../reducers/Http.reducer";
 import {
     FilmsV1Models,
-    PeopleV1Models, PlanetsV1Models,
+    PeopleV1Models,
+    PlanetsV1Models,
     ResponseV1Models,
     SpeciesV1Models,
     StarshipsV1Models,
     VehiclesV1Models
 } from "../models/api";
-import {PeopleSingleV1Models} from "../models/singles/PeopleSingle.v1.models";
 import {LinkModels} from "../models/Link.models";
 
 export const FetchSingleApi = () => {
