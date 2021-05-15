@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import {useHistory, useParams, Link} from "react-router-dom";
 import {FetchSingleApi} from "../../hooks/FetchSingleApi";
-import {Col, Container, Row, Spinner} from "react-bootstrap";
+import {CardColumns, Card, Col, Container, Row, Spinner} from "react-bootstrap";
+import {formatDistance, formatRelative, subDays} from 'date-fns';
+import {LinkModels} from "../../models/Link.models";
 
 export const FilmsSingle: React.FC = (): JSX.Element => {
 
@@ -11,7 +13,7 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
     const [error, setError] = useState<{ isError: boolean, reason: string }>({isError: false, reason: ""});
     const {sendSingleRequest, data, isLoading} = FetchSingleApi();
 
-    useEffect( () => {
+    useEffect(() => {
 
         if (id) {
             sendSingleRequest("http://localhost:7000/api/v1/films/" + id, "GET", "film");
@@ -24,7 +26,10 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
         <Container>
             {
                 isLoading && (
-                    <Spinner animation={"border"} />
+                    <React.Fragment>
+                        <Spinner animation={"border"} role="status"/>
+                        <p>Loading...</p>
+                    </React.Fragment>
                 )
             }
             {
@@ -32,10 +37,10 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
                     <React.Fragment>
                         <Row>
                             <Col xs={12} md={3}>
-                            <img
-                                className="w-100"
-                                src={process.env.PUBLIC_URL + "/img/film0" + id + ".jpg"}
-                                alt={"Image of " + data?.name}/>
+                                <img
+                                    className="w-100"
+                                    src={process.env.PUBLIC_URL + "/img/film0" + id + ".jpg"}
+                                    alt={"Image of " + data?.name}/>
                             </Col>
 
                             <Col xs={12} md={9}>
@@ -63,10 +68,125 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
                                 </Row>
 
                                 <h2>Release</h2>
-                                <p>{ data?.release_date }</p>
-
+                                <p>
+                                    {
+                                        formatDistance(
+                                            subDays(
+                                                new Date(
+                                                    data?.release_date.split("-")[0],
+                                                    data?.release_date.split("-")[1],
+                                                    data?.release_date.split("-")[2]
+                                                ), 3),
+                                            new Date(),
+                                        )
+                                    }
+                                    <br/>
+                                    <i> {
+                                        formatRelative(
+                                            subDays(
+                                                new Date(
+                                                    data?.release_date.split("-")[0],
+                                                    data?.release_date.split("-")[1],
+                                                    data?.release_date.split("-")[2]
+                                                ), 3),
+                                            new Date(),
+                                        )
+                                    }</i>
+                                </p>
                             </Col>
                         </Row>
+                        <CardColumns>
+                            <Card className="bg-dark">
+                                <Card.Body>
+                                    <Card.Title>
+                                        <h2>Planets</h2>
+                                    </Card.Title>
+                                    <ul className="list-group">
+                                        {
+                                            data?.planets.map((planet: LinkModels) => (
+                                                <Link to={"/planet/" + planet?.id}>
+                                                    <li key={planet?.id} className="list-group-item bg-dark">
+                                                        {planet?.label}
+                                                    </li>
+                                                </Link>
+                                            ))
+                                        }
+                                    </ul>
+                                </Card.Body>
+                            </Card>
+                            <Card className="bg-dark">
+                                <Card.Body>
+                                    <Card.Title>
+                                        <h2>Species</h2>
+                                    </Card.Title>
+                                    <ul className="list-group">
+                                        {
+                                            data?.species.map( (specie: LinkModels) => (
+                                                <Link to={"/species/" + specie?.id}>
+                                                    <li key={specie?.id} className="list-group-item bg-dark">
+                                                        {specie?.label}
+                                                    </li>
+                                                </Link>
+                                            ))
+                                        }
+                                    </ul>
+                                </Card.Body>
+                            </Card>
+                            <Card className="bg-dark">
+                                <Card.Body>
+                                    <Card.Title>
+                                        <h2>Characters</h2>
+                                    </Card.Title>
+                                    <ul className="list-group">
+                                        {
+                                            data?.characters.map((planet: LinkModels) => (
+                                                <Link to={"/people/" + planet?.id}>
+                                                    <li key={planet?.id} className="list-group-item bg-dark">
+                                                        {planet?.label}
+                                                    </li>
+                                                </Link>
+                                            ))
+                                        }
+                                    </ul>
+                                </Card.Body>
+                            </Card>
+                            <Card className="bg-dark">
+                                <Card.Body>
+                                    <Card.Title>
+                                        <h2>Starships</h2>
+                                    </Card.Title>
+                                    <ul className="list-group">
+                                        {
+                                            data?.starships.map( (starship: LinkModels) => (
+                                                <Link to={"/starship/" + starship?.id}>
+                                                    <li key={starship?.id} className="list-group-item bg-dark">
+                                                        { starship?.label }
+                                                    </li>
+                                                </Link>
+                                            ))
+                                        }
+                                    </ul>
+                                </Card.Body>
+                            </Card>
+                            <Card className="bg-dark">
+                                <Card.Body>
+                                    <Card.Title>
+                                        <h2>Vehicles</h2>
+                                    </Card.Title>
+                                    <ul className="list-group">
+                                        {
+                                            data?.vehicles.map( (vehicle: LinkModels) => (
+                                                <Link to={"/vehicle/" + vehicle?.id}>
+                                                    <li key={vehicle?.id} className="list-group-item bg-dark">
+                                                        { vehicle?.label }
+                                                    </li>
+                                                </Link>
+                                            ))
+                                        }
+                                    </ul>
+                                </Card.Body>
+                            </Card>
+                        </CardColumns>
                     </React.Fragment>
                 )
             }

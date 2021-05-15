@@ -10,6 +10,8 @@ import {
 } from "../models/api";
 import {LinkModels} from "../models/Link.models";
 import {PeopleSingleV1Models} from "../models/singles/PeopleSingle.v1.models";
+import {FilmSingleV1Models} from "../models/singles/FilmSingle.v1.models";
+import {PlanetSingleV1Models} from "../models/singles/PlanetSingle.v1.models";
 
 export const FetchSingleApi = () => {
 
@@ -96,13 +98,109 @@ export const FetchSingleApi = () => {
 
                 const resJSONFilm: FilmsV1Models = await res.json();
 
-                console.log(resJSONFilm);
+                const resFilmPlanets: Array<Promise<any>> = await resJSONFilm.planets.map(
+                    (planet: string) => fetch(planet, { method: "GET"}).then(res => res.json())
+                        .then( (data: PlanetsV1Models) => {
+                            return {
+                                label: data?.name,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
 
-                dispatchSingleState({ type: "RESPONSE", response: resJSONFilm });
+                const resFilmSpecies: Array<Promise<any>> = await resJSONFilm.species.map(
+                    (specie: string) => fetch(specie, { method: "GET"}).then( res => res.json())
+                        .then( (data: SpeciesV1Models) => {
+                            return {
+                                label: data?.name,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
+
+                const resFilmPeople: Array<Promise<any>> = await resJSONFilm.characters.map(
+                    (people: string) => fetch(people, { method: "GET"}).then( res => res.json())
+                        .then( (data: PeopleV1Models) => {
+                            return {
+                                label: data?.name,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
+
+                const resFilmStarships: Array<Promise<any>> = await resJSONFilm.starships.map(
+                    (starship: string) => fetch(starship, { method: 'GET'}).then( res => res.json())
+                        .then( (data: StarshipsV1Models) => {
+                            return {
+                                label: data?.name,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
+
+                const resFilmVehicles: Array<Promise<any>> = await resJSONFilm.vehicles.map(
+                    (vehicles: string) => fetch(vehicles, {method: "GET"}).then( res => res.json())
+                        .then( (data: StarshipsV1Models) => {
+                            return {
+                                label: data?.name,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
+
+                const PLANETS_INTO_FILM = await Promise.all(resFilmPlanets.map( async inner => inner));
+                const SPECIES_INTO_FILM = await Promise.all(resFilmSpecies.map( async inner => inner));
+                const PEOPLE_INTO_FILM = await Promise.all(resFilmPeople.map(async inner => inner));
+                const STARSHIPS_INTO_FILM = await Promise.all(resFilmStarships.map(async inner => inner));
+                const VEHICLES_INTO_FILM = await Promise.all(resFilmVehicles.map(async inner => inner ));
+
+                const DATA_FILMS: FilmSingleV1Models = {
+                    ...resJSONFilm,
+                    planets: PLANETS_INTO_FILM,
+                    species: SPECIES_INTO_FILM,
+                    characters: PEOPLE_INTO_FILM,
+                    starships: STARSHIPS_INTO_FILM,
+                    vehicles: VEHICLES_INTO_FILM
+                }
+
+                dispatchSingleState({ type: "RESPONSE", response: DATA_FILMS });
                 break;
             }
 
+            case "planet":
 
+                const resJSONPlanet: PlanetsV1Models = await res.json();
+
+                const resPlanetFilms: Array<Promise<LinkModels>> = await resJSONPlanet.films.map(
+                    (film: string) => fetch(film, { method: "GET"}).then( res => res.json())
+                        .then( (data: FilmsV1Models) => {
+                            return {
+                                label: data?.title,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
+
+                const resPlanetPeople: Array<Promise<LinkModels>> = await resJSONPlanet.residents.map(
+                    (people: string) => fetch(people, { method: "GET"}).then( res => res.json())
+                        .then( (data: PeopleV1Models) => {
+                            return {
+                                label: data?.name,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
+
+                const FILM_INTO_PLANET = await Promise.all(resPlanetFilms);
+                const PEOPLE_INTO_PLANET = await Promise.all(resPlanetPeople);
+
+                const DATA_PLANET: PlanetSingleV1Models = {
+                    ...resJSONPlanet,
+                    residents: PEOPLE_INTO_PLANET,
+                    films: FILM_INTO_PLANET
+                }
+
+                break;
             default: {
                 dispatchSingleState({type: "ERROR", errorMessage: "Resource entity is wrong…"})
                 break;

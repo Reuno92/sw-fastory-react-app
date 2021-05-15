@@ -29,7 +29,7 @@ function App() {
                         <Fragment>
                             <Header user={user} dispatch={dispatch}/>
                             <main>
-                                <Route path="/search">
+                                <Route exact path="/search">
                                     <Search />
                                 </Route>
                                 <Route path="/people/:id">

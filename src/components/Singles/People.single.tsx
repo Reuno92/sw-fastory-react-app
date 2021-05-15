@@ -17,20 +17,11 @@ export const PeopleSingle: React.FC = (): JSX.Element => {
             sendSingleRequest("http://localhost:7000/api/v1/people/" + id, "GET", "people");
         }
 
-        if (!id) {
-            setError({isError: true, reason: "Id is undefined"});
-        }
-
     }, [sendSingleRequest, id]);
 
 
     return (
         <Container>
-            {
-                error && (
-                    history.push("/")
-                )
-            }
             {
                 isLoading && (
                     <Spinner animation={"border"}/>

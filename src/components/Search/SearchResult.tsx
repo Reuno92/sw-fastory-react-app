@@ -216,7 +216,7 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
-                                                            onClick={() => goToSingle(result.url.match(/(?<=planet\/)\d+/gm), "planet") }>
+                                                            onClick={() => goToSingle(result.url.match(/(?<=planets\/)\d+/gm), "planet") }>
                                                             See
                                                         </button>
                                                     </td>
@@ -235,7 +235,7 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
-                                                            onClick={() => goToSingle(result.url.match(/(?<=film\/)\d+/gm), 'film') }>
+                                                            onClick={() => goToSingle(result.url.match(/(?<=films\/)\d+/gm), 'film') }>
                                                             See
                                                         </button>
                                                     </td>
@@ -254,7 +254,7 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
-                                                            onClick={() => goToSingle(result.url.match(/(?<=film\/)\d+/gm), 'specie') }>
+                                                            onClick={() => goToSingle(result.url.match(/(?<=species\/)\d+/gm), 'specie') }>
                                                             See
                                                         </button>
                                                     </td>
@@ -274,7 +274,7 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
-                                                            onClick={() => goToSingle(result.url.match(/(?<=starship\/)\d+/gm), 'starship') }>
+                                                            onClick={() => goToSingle(result.url.match(/(?<=starships\/)\d+/gm), 'starship') }>
                                                             See
                                                         </button>
                                                     </td>
@@ -294,7 +294,7 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
-                                                            onClick={() => goToSingle(result.url.match(/(?<=vehicle\/)\d+/gm), 'vehicle') }>
+                                                            onClick={() => goToSingle(result.url.match(/(?<=vehicles\/)\d+/gm), 'vehicle') }>
                                                             See
                                                         </button>
                                                     </td>
