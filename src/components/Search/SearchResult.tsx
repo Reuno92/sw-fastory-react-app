@@ -1,6 +1,7 @@
-import {Fragment, PropsWithChildren, useEffect} from "react";
+import {Fragment, PropsWithChildren, useCallback, useEffect} from "react";
 import FetchApi from "../../hooks/FetchSearchApi";
 import {Alert, Table} from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import {PeopleV1Models, PlanetsV1Models, FilmsV1Models, SpeciesV1Models, StarshipsV1Models, VehiclesV1Models} from "../../models/api";
 
 type SearchResultType = {
@@ -10,6 +11,8 @@ type SearchResultType = {
 const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
     const { isLoading, error } = FetchApi();
     const { results } = props;
+
+    const history = useHistory();
 
     const isPeople = (obj: any): obj is PeopleV1Models => {
         return obj.hair_color !== undefined
@@ -42,6 +45,9 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
     function firstLetter(gender: string) {
         return gender.charAt(0).toUpperCase() + gender.slice(1);
     }
+
+    const goToSingle = useCallback((id: string, entity: string) => { history.push(`/${entity}/${id}`) }, [history]);
+
 
     return (
         <section className="container">
@@ -191,7 +197,7 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
-                                                            onClick={() => console.log(result.url)}>
+                                                            onClick={() => goToSingle(result.url.match(/(?<=people\/)\d+/gm), 'people') }>
                                                             See
                                                         </button>
                                                     </td>
