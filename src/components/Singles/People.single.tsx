@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Col, Container, Row, Spinner, CardColumns, Card} from "react-bootstrap";
-import {Link, useParams} from "react-router-dom";
+import {Col, Container, Row, Spinner, CardColumns, Card, Alert} from "react-bootstrap";
+import {Link, useHistory, useParams} from "react-router-dom";
 import {LinkModels} from "../../models/Link.models";
 import {FetchSingleApi} from "../../hooks/FetchSingleApi";
 
 export const PeopleSingle: React.FC = (): JSX.Element => {
 
+    const history = useHistory();
     let {id} = useParams<{ id: string | undefined }>();
     const [error, setError] = useState<{ isError: boolean, reason: string }>({isError: false, reason: ""});
     const {sendSingleRequest, data, isLoading} = FetchSingleApi();
@@ -25,6 +26,11 @@ export const PeopleSingle: React.FC = (): JSX.Element => {
 
     return (
         <Container>
+            {
+                error && (
+                    history.push("/")
+                )
+            }
             {
                 isLoading && (
                     <Spinner animation={"border"}/>

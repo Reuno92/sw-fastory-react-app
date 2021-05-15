@@ -4,7 +4,8 @@ import Header from "./components/Templates/Header"
 import Login from "./components/Login";
 import Search from "./components/Search";
 import {initialStateLogin, loginReducer} from "./reducers/Login.reducer";
-import {PeopleSingle} from "./components/Singles/People.single.";
+import {PeopleSingle} from "./components/Singles/People.single";
+import {FilmsSingle} from "./components/Singles/Films.single";
 
 function App() {
 
@@ -29,10 +30,13 @@ function App() {
                             <Header user={user} dispatch={dispatch}/>
                             <main>
                                 <Route path="/search">
-                                    <Search/>
+                                    <Search />
                                 </Route>
                                 <Route path="/people/:id">
                                     <PeopleSingle />
+                                </Route>
+                                <Route path="/film/:id">
+                                    <FilmsSingle />
                                 </Route>
                             </main>
                         </Fragment>

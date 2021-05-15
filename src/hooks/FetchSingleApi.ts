@@ -4,14 +4,12 @@ import {
     FilmsV1Models,
     PeopleV1Models,
     PlanetsV1Models,
-    ResponseV1Models,
     SpeciesV1Models,
     StarshipsV1Models,
     VehiclesV1Models
 } from "../models/api";
 import {LinkModels} from "../models/Link.models";
 import {PeopleSingleV1Models} from "../models/singles/PeopleSingle.v1.models";
-import {ResponseSingleV1Models} from "../models/singles/ResponseSingle.v1.models";
 
 export const FetchSingleApi = () => {
 
@@ -90,10 +88,20 @@ export const FetchSingleApi = () => {
                     vehicles: VEHICLES_INTO_PEOPLE,
                 }
 
-                dispatchSingleState({type: "RESPONSE", response: DATA_PEOPLE});
-
+                dispatchSingleState({ type: "RESPONSE", response: DATA_PEOPLE });
                 break;
             }
+
+            case "film": {
+
+                const resJSONFilm: FilmsV1Models = await res.json();
+
+                console.log(resJSONFilm);
+
+                dispatchSingleState({ type: "RESPONSE", response: resJSONFilm });
+                break;
+            }
+
 
             default: {
                 dispatchSingleState({type: "ERROR", errorMessage: "Resource entity is wrong…"})
