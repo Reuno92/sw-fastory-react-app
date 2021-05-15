@@ -37,7 +37,7 @@ export const PeopleSingle: React.FC = (): JSX.Element => {
                             <Col xs={2}>
                                 <img
                                     className="img-fluid"
-                                    src={"/assets/img/" + data?.name + ".jpg"}
+                                    src={process.env.PUBLIC_URL + /img/ + data?.name + ".jpg"}
                                     alt={"Image of " + data?.name}/>
                             </Col>
                             <Col xs={10}>
@@ -100,7 +100,7 @@ export const PeopleSingle: React.FC = (): JSX.Element => {
                                         (film: LinkModels) => (
                                             <Link to={"/films/" + film?.id}>{
                                                 <Card key={film?.id} className="bg-dark p-3">
-                                                    <Card.Img variant="top" src={"assets/img/film0" + film?.id + ".jpg"} />
+                                                    <Card.Img variant="top" src={process.env.PUBLIC_URL + "/img/film0" + film?.id + ".jpg"} />
                                                     <Card.Body>
                                                         <Card.Title>
                                                             {film?.label}
