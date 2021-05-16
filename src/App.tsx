@@ -7,6 +7,9 @@ import {initialStateLogin, loginReducer} from "./reducers/Login.reducer";
 import {PeopleSingle} from "./components/Singles/People.single";
 import {FilmsSingle} from "./components/Singles/Films.single";
 import {PlanetsSingle} from "./components/Singles/Planets.single";
+import {SpeciesSingle} from "./components/Singles/Species.single";
+import {StarshipsSingle} from "./components/Singles/Starships.single";
+import {VehiclesSingle} from "./components/Singles/Vehicles.single";
 
 function App() {
 
@@ -41,6 +44,15 @@ function App() {
                                 </Route>
                                 <Route path="/planet/:id">
                                     <PlanetsSingle />
+                                </Route>
+                                <Route path="/specie/:id">
+                                    <SpeciesSingle />
+                                </Route>
+                                <Route path="/starship/:id">
+                                    <StarshipsSingle />
+                                </Route>
+                                <Route path="/vehicle/:id">
+                                    <VehiclesSingle />
                                 </Route>
                             </main>
                         </Fragment>

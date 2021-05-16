@@ -200,8 +200,6 @@ export const FetchSingleApi = () => {
                     films: FILM_INTO_PLANET
                 }
 
-                console.log(DATA_PLANET);
-
                 dispatchSingleState({ type: "RESPONSE", response: DATA_PLANET});
                 break;
             default: {
