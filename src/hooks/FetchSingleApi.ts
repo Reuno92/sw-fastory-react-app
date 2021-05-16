@@ -202,6 +202,7 @@ export const FetchSingleApi = () => {
 
                 dispatchSingleState({ type: "RESPONSE", response: DATA_PLANET});
                 break;
+
             default: {
                 dispatchSingleState({type: "ERROR", errorMessage: "Resource entity is wrong…"})
                 break;
