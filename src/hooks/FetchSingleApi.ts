@@ -206,12 +206,38 @@ export const FetchSingleApi = () => {
 
             case "specie":
 
-                const resJSONSpecie: SpecieSingleV1Models = await res.json();
+                const resJSONSpecie: SpeciesV1Models = await res.json();
 
+                const resSpecieFilms: Array<Promise<LinkModels>> = await resJSONSpecie.films.map(
+                    (film: string) => fetch(film, { method: "GET"}).then( res => res.json())
+                        .then( (data: FilmsV1Models) => {
+                            return {
+                                label: data?.title,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
 
+                const resSpeciePeople: Array<Promise<LinkModels>> = await resJSONSpecie.people.map(
+                    (people: string) => fetch(people, { method: "GET"}).then( res => res.json())
+                        .then( (data: PeopleV1Models) => {
+                            return {
+                                label: data?.name,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
 
-                dispatchSingleState({type: "RESPONSE", response: resJSONSpecie})
+                const FILM_INTO_SPECIE = await Promise.all(resSpecieFilms);
+                const PEOPLE_INTO_SPECIE = await Promise.all(resSpeciePeople);
 
+                const DATA_SPECIE: SpecieSingleV1Models = {
+                    ...resJSONSpecie,
+                    people: PEOPLE_INTO_SPECIE,
+                    films: FILM_INTO_SPECIE
+                }
+
+                dispatchSingleState({ type: "RESPONSE", response: DATA_SPECIE });
                 break;
 
             default: {
