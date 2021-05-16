@@ -7,8 +7,6 @@ import {LinkModels} from "../../models/Link.models";
 
 export const FilmsSingle: React.FC = (): JSX.Element => {
 
-    const history = useHistory();
-
     let {id} = useParams<{ id: string | undefined }>();
     const [error, setError] = useState<{ isError: boolean, reason: string }>({isError: false, reason: ""});
     const {sendSingleRequest, data, isLoading} = FetchSingleApi();
@@ -19,7 +17,7 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
             sendSingleRequest("http://localhost:7000/api/v1/films/" + id, "GET", "film");
         }
 
-    }, [sendSingleRequest, id, history]);
+    }, [sendSingleRequest, id]);
 
 
     return (

@@ -6,6 +6,7 @@ import Search from "./components/Search";
 import {initialStateLogin, loginReducer} from "./reducers/Login.reducer";
 import {PeopleSingle} from "./components/Singles/People.single";
 import {FilmsSingle} from "./components/Singles/Films.single";
+import {PlanetsSingle} from "./components/Singles/Planets.single";
 
 function App() {
 
@@ -37,6 +38,9 @@ function App() {
                                 </Route>
                                 <Route path="/film/:id">
                                     <FilmsSingle />
+                                </Route>
+                                <Route path="/planet/:id">
+                                    <PlanetsSingle />
                                 </Route>
                             </main>
                         </Fragment>
