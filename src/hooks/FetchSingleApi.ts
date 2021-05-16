@@ -13,6 +13,7 @@ import {PeopleSingleV1Models} from "../models/singles/PeopleSingle.v1.models";
 import {FilmSingleV1Models} from "../models/singles/FilmSingle.v1.models";
 import {PlanetSingleV1Models} from "../models/singles/PlanetSingle.v1.models";
 import {SpecieSingleV1Models} from "../models/singles/SpecieSingle.v1.models";
+import {StarshipSingleV1Models} from "../models/singles/StarshipSingle.v1.models";
 
 export const FetchSingleApi = () => {
 
@@ -228,18 +229,64 @@ export const FetchSingleApi = () => {
                         })
                 );
 
+                const resSpeciesOrigin = await fetch(resJSONSpecie.homeworld, { method: "GET"}).then( res => res.json()
+                    .then( (data: PlanetsV1Models) => {
+                        return {
+                            label: data?.name,
+                            id: data?.url.match(/\d+/gm)![0]
+                        } as unknown as LinkModels
+                    })
+                );
+
                 const FILM_INTO_SPECIE = await Promise.all(resSpecieFilms);
                 const PEOPLE_INTO_SPECIE = await Promise.all(resSpeciePeople);
 
                 const DATA_SPECIE: SpecieSingleV1Models = {
                     ...resJSONSpecie,
                     people: PEOPLE_INTO_SPECIE,
-                    films: FILM_INTO_SPECIE
+                    films: FILM_INTO_SPECIE,
+                    homeworld: resSpeciesOrigin
                 }
 
                 dispatchSingleState({ type: "RESPONSE", response: DATA_SPECIE });
                 break;
 
+            case "starship":
+
+                const resJSONStarship: StarshipsV1Models = await res.json();
+
+                const resStarshipFilm: Array<Promise<LinkModels>> = await resJSONStarship.films.map(
+                    (film: string ) => fetch(film, { method: "GET"}).then( res => res.json())
+                        .then( (data: FilmsV1Models) => {
+                            return {
+                                label: data?.title,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
+
+                const resStarshipPeople: Array<Promise<LinkModels>> = await resJSONStarship.pilots.map(
+                    (people: string) => fetch(people, { method: "GET"}).then( res => res.json())
+                        .then( (data: PeopleV1Models) => {
+                            return {
+                                label: data?.name,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
+
+                const FILM_INTO_STARSHIP = await Promise.all(resStarshipFilm);
+                const PEOPLE_INTO_STARSHIP = await Promise.all(resStarshipPeople);
+
+                const DATA_STARSHIP: StarshipSingleV1Models = {
+                    ...resJSONStarship,
+                    films: FILM_INTO_STARSHIP,
+                    pilots: PEOPLE_INTO_STARSHIP
+                };
+
+                dispatchSingleState({type: "RESPONSE", message: ""});
+
+                break;
             default: {
                 dispatchSingleState({type: "ERROR", errorMessage: "Resource entity is wrong…"})
                 break;
