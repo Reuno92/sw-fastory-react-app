@@ -12,7 +12,7 @@ export class SpecieSingleV1Models {
      * @param { string } hair_colors - A comma-separated string of common hair colors for this species, "none" if this species does not typically have hair.
      * @param { string } skin_colors - A comma-separated string of common skin colors for this species, "none" if this species does not typically have skin.
      * @param { string } language - The language commonly spoken by this species.
-     * @param { string } homeworld - The URL of a planet resource, a planet that this species originates from.
+     * @param { LinkModels } homeworld - The URL of a planet resource, a planet that this species originates from.
      * @param { Array<LinkModels> } people - An array of People URL Resources that are a part of this species.
      * @param { Array<LinkModels> } films - An array of Film URL Resources that this species has appeared in.
      * @param { string } url - The hypermedia URL of this resource.
@@ -30,7 +30,7 @@ export class SpecieSingleV1Models {
         public hair_colors: string,
         public skin_colors: string,
         public language: string,
-        public homeworld: string,
+        public homeworld: LinkModels,
         public people: Array<LinkModels>,
         public films: Array<LinkModels>,
         public url: string,
