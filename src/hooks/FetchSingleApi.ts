@@ -27,8 +27,7 @@ export const FetchSingleApi = () => {
                 "Content-Type": "application/json; charset=utf-8",
                 "Accept": "application/json"
             }
-        });
-
+        })
 
         switch (entity) {
             case "people": {
@@ -284,8 +283,15 @@ export const FetchSingleApi = () => {
                     pilots: PEOPLE_INTO_STARSHIP
                 };
 
-                dispatchSingleState({type: "RESPONSE", message: ""});
+                dispatchSingleState({ type: "RESPONSE", response: DATA_STARSHIP });
+                break;
 
+            case "vehicle":
+                const resJSONVehicle: VehiclesV1Models = await res.json();
+
+                console.log(resJSONVehicle);
+
+                dispatchSingleState({type: "RESPONSE", message: resJSONVehicle});
                 break;
             default: {
                 dispatchSingleState({type: "ERROR", errorMessage: "Resource entity is wrong…"})
