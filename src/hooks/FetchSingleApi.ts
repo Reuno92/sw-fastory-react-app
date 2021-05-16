@@ -12,6 +12,7 @@ import {LinkModels} from "../models/Link.models";
 import {PeopleSingleV1Models} from "../models/singles/PeopleSingle.v1.models";
 import {FilmSingleV1Models} from "../models/singles/FilmSingle.v1.models";
 import {PlanetSingleV1Models} from "../models/singles/PlanetSingle.v1.models";
+import {SpecieSingleV1Models} from "../models/singles/SpecieSingle.v1.models";
 
 export const FetchSingleApi = () => {
 
@@ -201,6 +202,16 @@ export const FetchSingleApi = () => {
                 }
 
                 dispatchSingleState({ type: "RESPONSE", response: DATA_PLANET});
+                break;
+
+            case "specie":
+
+                const resJSONSpecie: SpecieSingleV1Models = await res.json();
+
+
+
+                dispatchSingleState({type: "RESPONSE", response: resJSONSpecie})
+
                 break;
 
             default: {

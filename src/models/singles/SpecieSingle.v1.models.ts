@@ -1,6 +1,6 @@
 import {LinkModels} from "../Link.models";
 
-export class SpeciesV1Models {
+export class SpecieSingleV1Models {
     /**
      *
      * @param { string } name - The name of this species.
