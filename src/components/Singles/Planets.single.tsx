@@ -33,7 +33,7 @@ export const PlanetsSingle: React.FC = (): JSX.Element => {
                             </Col>
 
                             <Col xs={12} md={6}>
-                                <h1>{data?.name}</h1>
+                                <h1 className="hyper-title">{data?.name}</h1>
                                 <small>
                                     Created at: {data?.created.split("T")[0]} | Edited at: {data?.created.split("T")[0]}
                                 </small>

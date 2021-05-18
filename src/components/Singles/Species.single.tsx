@@ -33,7 +33,7 @@ export const SpeciesSingle: React.FC = (): JSX.Element => {
                          alt={"Image of " + data?.name}/>
                 </Col>
                 <Col xs={12} md={8}>
-                    <h1>{data?.name}</h1>
+                    <h1 className="hyper-title">{data?.name}</h1>
                     <small className="mb-3">
                         Created at: {data?.created.split("T")[0]} | Edited at: {data?.created.split("T")[0]}
                     </small>

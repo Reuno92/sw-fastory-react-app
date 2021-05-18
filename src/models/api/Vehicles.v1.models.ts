@@ -3,7 +3,7 @@
  *
  * A Vehicle resource is a single transport craft that does not have hyperdrive capability.
  */
-export class VehiclesV1Models {
+export class VehiclesV1Models<T> {
 
   /**
    *
@@ -37,8 +37,8 @@ export class VehiclesV1Models {
     public max_atmosphering_speed: string,
     public cargo_capacity: string,
     public consumables: string,
-    public films: Array<string>,
-    public pilots: Array<string>,
+    public films: Array<T>,
+    public pilots: Array<T>,
     public url: string,
     public created: string,
     public edited: string

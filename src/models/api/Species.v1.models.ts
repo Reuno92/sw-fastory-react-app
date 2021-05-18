@@ -3,7 +3,7 @@
  *
  * A Species resource is a type of person or character within the Star Wars Universe.
  */
-export class SpeciesV1Models {
+export class SpeciesV1Models<T, S> {
   /**
    *
    * @param { string } name - The name of this species.
@@ -33,9 +33,9 @@ export class SpeciesV1Models {
     public hair_colors: string,
     public skin_colors: string,
     public language: string,
-    public homeworld: string,
-    public people: Array<string>,
-    public films: Array<string>,
+    public homeworld: T|S,
+    public people: Array<T>,
+    public films: Array<T>,
     public url: string,
     public created: string,
     public edited: string

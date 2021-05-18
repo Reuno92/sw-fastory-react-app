@@ -3,7 +3,7 @@
  *
  * A Starship resource is a single transport craft that has hyperdrive capability.
  */
-export class StarshipsV1Models {
+export class StarshipsV1Models<T> {
   /**
    *
    * @param { string } name - The name of this starship. The common name, such as "Death Star".
@@ -39,8 +39,8 @@ export class StarshipsV1Models {
     public MGLT: string,
     public cargo_capacity: string,
     public consumables: string,
-    public films: Array<string>,
-    public pilots: Array<string>,
+    public films: Array<T>,
+    public pilots: Array<T>,
     public url: string,
     public created: string,
     public edited: string

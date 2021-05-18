@@ -27,17 +27,17 @@ export const FetchSearchApi = () => {
 
         switch (entity) {
             case 'people':
-                let resJSONPeople: ResponseV1Models<PeopleV1Models> = await res.json()
+                let resJSONPeople: ResponseV1Models<PeopleV1Models<string>> = await res.json()
                     .catch((): void => {
                         dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with People !'})
                     });
 
                 const resFilmsPeople: Array<Array<Promise<any>>> = resJSONPeople.results.map(
-                    (people: PeopleV1Models) => people.films.map(
+                    (people: PeopleV1Models<string>) => people.films.map(
                         (film: string) => fetch(film, {
                             method: 'GET'
                         }).then(x => x.json())
-                            .then((data: FilmsV1Models) => data.title)
+                            .then((data: FilmsV1Models<string>) => data.title)
                             .catch((): void => {
                                 dispatchHttp({
                                     type: "ERROR",
@@ -48,11 +48,11 @@ export const FetchSearchApi = () => {
                 );
 
                 const resSpeciesPeople = await resJSONPeople.results.map(
-                    (people: PeopleV1Models) => people.species.map(
+                    (people: PeopleV1Models<string>) => people.species.map(
                         (specie: string) => fetch(specie, {
                             method: 'GET'
                         }).then(x => x.json())
-                            .then((data: SpeciesV1Models) => data.name)
+                            .then((data: SpeciesV1Models<string, string>) => data.name)
                             .catch((): void => {
                                 dispatchHttp({
                                     type: "ERROR",
@@ -63,11 +63,11 @@ export const FetchSearchApi = () => {
                 );
 
                 const resStarshipsPeople: Array<Array<Promise<any>>> = await resJSONPeople.results.map(
-                    (people: PeopleV1Models) => people.starships.map(
+                    (people: PeopleV1Models<string>) => people.starships.map(
                         (starship: string) => fetch(starship, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: StarshipsV1Models) => data.name)
+                            .then((data: StarshipsV1Models<string>) => data.name)
                             .catch((): void => {
                                 dispatchHttp({
                                     type: "ERROR",
@@ -78,11 +78,11 @@ export const FetchSearchApi = () => {
                 );
 
                 const resVehiclesPeople: Array<Array<Promise<any>>> = await resJSONPeople.results.map(
-                    (people: PeopleV1Models) => people.vehicles.map(
+                    (people: PeopleV1Models<string>) => people.vehicles.map(
                         (vehicle: string) => fetch(vehicle, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: VehiclesV1Models) => data.name)
+                            .then((data: VehiclesV1Models<string>) => data.name)
                             .catch((): void => {
                                 dispatchHttp({
                                     type: "ERROR",
@@ -93,10 +93,10 @@ export const FetchSearchApi = () => {
                 );
 
                 const resPlanetPeople: Array<Promise<any>> = await resJSONPeople.results.flatMap(
-                    (people: PeopleV1Models) => fetch(people.homeworld, {
+                    (people: PeopleV1Models<string>) => fetch(people.homeworld, {
                         method: 'GET'
                     }).then(res => res.json())
-                        .then((data: PlanetsV1Models) => data.name)
+                        .then((data: PlanetsV1Models<string>) => data.name)
                         .catch((): void => {
                             dispatchHttp({
                                 type: "ERROR",
@@ -111,11 +111,11 @@ export const FetchSearchApi = () => {
                 const VEHICLES_INTO_PEOPLE = await Promise.all(resVehiclesPeople.map(async inner => await Promise.all(inner)));
                 const HOME_WORLD_INTO_PEOPLE = await Promise.all(resPlanetPeople);
 
-                const DATA_PEOPLE: ResponseV1Models<PeopleV1Models> = {
+                const DATA_PEOPLE: ResponseV1Models<PeopleV1Models<string>> = {
                     count: resJSONPeople.count,
                     previous: resJSONPeople.previous,
                     next: resJSONPeople.next,
-                    results: resJSONPeople.results.map((x: PeopleV1Models, index: number) => {
+                    results: resJSONPeople.results.map((x: PeopleV1Models<string>, index: number) => {
                         return {
                             name: x.name,
                             birth_year: x.birth_year,
@@ -133,7 +133,7 @@ export const FetchSearchApi = () => {
                             url: x.url,
                             created: x.created,
                             edited: x.edited,
-                        } as PeopleV1Models
+                        } as PeopleV1Models<string>
                     })
                 };
 
@@ -143,17 +143,17 @@ export const FetchSearchApi = () => {
 
             case 'planets':
 
-                let resJSONPlanets: ResponseV1Models<PlanetsV1Models> = await res.json()
+                let resJSONPlanets: ResponseV1Models<PlanetsV1Models<string>> = await res.json()
                     .catch((): void => {
                         dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with People !'})
                     });
 
                 const resFilmsPlanets: Array<Array<Promise<any>>> = resJSONPlanets.results.map(
-                    (planet: PlanetsV1Models) => planet.films.map(
+                    (planet: PlanetsV1Models<string>) => planet.films.map(
                         (film: string) => fetch(film, {
                             method: 'GET'
                         }).then(x => x.json())
-                            .then((data: FilmsV1Models) => data.title)
+                            .then((data: FilmsV1Models<string>) => data.title)
                             .catch((): void => {
                                 dispatchHttp({
                                     type: "ERROR",
@@ -164,11 +164,11 @@ export const FetchSearchApi = () => {
                 );
 
                 const resPeoplePlanets: Array<Array<Promise<any>>> = resJSONPlanets.results.map(
-                    (planet: PlanetsV1Models) => planet.residents.map(
+                    (planet: PlanetsV1Models<string>) => planet.residents.map(
                         (film: string) => fetch(film, {
                             method: 'GET'
                         }).then(x => x.json())
-                            .then((data: PeopleV1Models) => data.name)
+                            .then((data: PeopleV1Models<string>) => data.name)
                             .catch((): void => {
                                 dispatchHttp({
                                     type: "ERROR",
@@ -181,11 +181,11 @@ export const FetchSearchApi = () => {
                 const FILMS = await Promise.all(resFilmsPlanets.map(async inner => await Promise.all(inner)));
                 const PEOPLE = await Promise.all(resPeoplePlanets.map(async inner => await Promise.all(inner)));
 
-                let DATA_PLANET: ResponseV1Models<PlanetsV1Models> = {
+                let DATA_PLANET: ResponseV1Models<PlanetsV1Models<string>> = {
                     count: resJSONPlanets.count,
                     previous: resJSONPlanets.previous,
                     next: resJSONPlanets.next,
-                    results: resJSONPlanets.results.map((x: PlanetsV1Models, index: number) => {
+                    results: resJSONPlanets.results.map((x: PlanetsV1Models<string>, index: number) => {
                         return {
                             name: x.name,
                             diameter: x.diameter,
@@ -201,7 +201,7 @@ export const FetchSearchApi = () => {
                             url: x.url,
                             created: x.created,
                             edited: x.edited
-                        } as PlanetsV1Models
+                        } as PlanetsV1Models<string>
                     })
                 };
 
@@ -210,53 +210,53 @@ export const FetchSearchApi = () => {
 
             case 'films':
 
-                let resJSONFilms: ResponseV1Models<FilmsV1Models> = await res.json()
+                let resJSONFilms: ResponseV1Models<FilmsV1Models<string>> = await res.json()
                     .catch((): void => {
                         dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with Films !'})
                     });
 
                 const resSpeciesFilms: Array<Array<Promise<any>>> = resJSONFilms.results.map(
-                    (film: FilmsV1Models) => film.species.map(
+                    (film: FilmsV1Models<string>) => film.species.map(
                         (specie: string) => fetch(specie, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: SpeciesV1Models) => data.name)
+                            .then((data: SpeciesV1Models<string, string>) => data.name)
                     )
                 );
 
                 const resStarshipsFilms: Array<Array<Promise<any>>> = resJSONFilms.results.map(
-                    (film: FilmsV1Models) => film.starships.map(
+                    (film: FilmsV1Models<string>) => film.starships.map(
                         (starship: string) => fetch(starship, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: StarshipsV1Models) => data.name)
+                            .then((data: StarshipsV1Models<string>) => data.name)
                     )
                 )
 
                 const resVehiclesFilms: Array<Array<Promise<any>>> = resJSONFilms.results.map(
-                    (film: FilmsV1Models) => film.starships.map(
+                    (film: FilmsV1Models<string>) => film.starships.map(
                         (vehicles: string) => fetch(vehicles, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: VehiclesV1Models) => data.name)
+                            .then((data: VehiclesV1Models<string>) => data.name)
                     )
                 )
 
                 const resPeopleFilm: Array<Array<Promise<any>>> = resJSONFilms.results.map(
-                    (film: FilmsV1Models) => film.characters.map(
+                    (film: FilmsV1Models<string>) => film.characters.map(
                         (people: string) => fetch(people, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: PeopleV1Models) => data.name)
+                            .then((data: PeopleV1Models<string>) => data.name)
                     )
                 )
 
                 const resPlanetFilm: Array<Array<Promise<any>>> = resJSONFilms.results.map(
-                    (film: FilmsV1Models) => film.planets.map(
+                    (film: FilmsV1Models<string>) => film.planets.map(
                         (planet: string) => fetch(planet, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: PeopleV1Models) => data.name)
+                            .then((data: PeopleV1Models<string>) => data.name)
                     )
                 )
 
@@ -266,11 +266,11 @@ export const FetchSearchApi = () => {
                 const PEOPLE_INTO_FILM = await Promise.all(resPeopleFilm.map(async inner => await Promise.all(inner)));
                 const PLANETS_INTO_FILM = await Promise.all(resPlanetFilm.map(async inner => await Promise.all(inner)));
 
-                const DATA_FILMS: ResponseV1Models<FilmsV1Models> = {
+                const DATA_FILMS: ResponseV1Models<FilmsV1Models<string>> = {
                     count: resJSONFilms.count,
                     previous: resJSONFilms.previous,
                     next: resJSONFilms.next,
-                    results: resJSONFilms.results.map((x: FilmsV1Models, index: number) => {
+                    results: resJSONFilms.results.map((x: FilmsV1Models<string>, index: number) => {
                         return {
                             title: x.title,
                             episode: x.episode,
@@ -286,7 +286,7 @@ export const FetchSearchApi = () => {
                             url: x.url,
                             created: x.created,
                             edited: x.edited
-                        } as FilmsV1Models
+                        } as FilmsV1Models<string>
                     })
                 }
 
@@ -296,45 +296,45 @@ export const FetchSearchApi = () => {
 
             case 'species':
 
-                let resJSONSpecies: ResponseV1Models<SpeciesV1Models> = await res.json()
+                let resJSONSpecies: ResponseV1Models<SpeciesV1Models<string, string>> = await res.json()
                     .catch((): void => {
                         dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with Species !'})
                     });
 
                 const resPeopleSpecies: Array<Array<Promise<any>>> = resJSONSpecies.results.map(
-                    (species: SpeciesV1Models) => species.people.map(
+                    (species: SpeciesV1Models<string, string>) => species.people.map(
                         (planet: string) => fetch(planet, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: PeopleV1Models) => data.name)
+                            .then((data: PeopleV1Models<string>) => data.name)
                     )
                 )
 
                 const resFilmSpecies: Array<Array<Promise<any>>> = resJSONSpecies.results.map(
-                    (species: SpeciesV1Models) => species.films.map(
+                    (species: SpeciesV1Models<string, string>) => species.films.map(
                         (planet: string) => fetch(planet, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: PeopleV1Models) => data.name)
+                            .then((data: PeopleV1Models<string>) => data.name)
                     )
                 )
 
                 const resPlanetSpecies: Array<Promise<any>> = resJSONSpecies.results.map(
-                    (species: SpeciesV1Models) => fetch(species.homeworld, {
+                    (species: SpeciesV1Models<string, string>) => fetch(species.homeworld, {
                         method: 'GET'
                     }).then(res => res.json())
-                        .then((data: PlanetsV1Models) => data.name)
+                        .then((data: PlanetsV1Models<string>) => data.name)
                 )
 
                 const PEOPLE_INTO_SPECIES = await Promise.all(resPeopleSpecies.map(async inner => await Promise.all(inner)));
                 const FILMS_INTO_SPECIES = await Promise.all(resFilmSpecies.map(async inner => await Promise.all(inner)));
                 const PLANET_INTO_SPECIES = await Promise.all(resPlanetSpecies);
 
-                const DATA_SPECIES: ResponseV1Models<SpeciesV1Models> = {
+                const DATA_SPECIES: ResponseV1Models<SpeciesV1Models<string, string>> = {
                     count: resJSONSpecies.count,
                     previous: resJSONSpecies.previous,
                     next: resJSONSpecies.next,
-                    results: resJSONSpecies.results.map((x: SpeciesV1Models, index: number) => {
+                    results: resJSONSpecies.results.map((x: SpeciesV1Models<string, string>, index: number) => {
                         return {
                             name: x.name,
                             classification: x.classification,
@@ -351,7 +351,7 @@ export const FetchSearchApi = () => {
                             url: x.url,
                             created: x.created,
                             edited: x.edited
-                        } as SpeciesV1Models
+                        } as SpeciesV1Models<string, string>
                     })
                 }
 
@@ -359,37 +359,37 @@ export const FetchSearchApi = () => {
                 break;
 
             case 'starships':
-                const resJSONStarships: ResponseV1Models<StarshipsV1Models> = await res.json()
+                const resJSONStarships: ResponseV1Models<StarshipsV1Models<string>> = await res.json()
                     .catch((): void => {
                         dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with Starpships !'});
                     })
 
                 const resFilmsStarship: Array<Array<Promise<any>>> = resJSONStarships.results.map(
-                    (starship: StarshipsV1Models) => starship.films.map(
+                    (starship: StarshipsV1Models<string>) => starship.films.map(
                         (film: string) => fetch(film, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: FilmsV1Models) => data.title)
+                            .then((data: FilmsV1Models<string>) => data.title)
                     )
                 );
 
                 const resPilotsStarship: Array<Array<Promise<any>>> = resJSONStarships.results.map(
-                    (starship: StarshipsV1Models) => starship.pilots.map(
+                    (starship: StarshipsV1Models<string>) => starship.pilots.map(
                         (pilot: string) => fetch(pilot, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: PeopleV1Models) => data.name)
+                            .then((data: PeopleV1Models<string>) => data.name)
                     )
                 );
 
                 const FILMS_INTO_STARSHIP = await Promise.all(resFilmsStarship.map(async inner => await Promise.all(inner)));
                 const PEOPLE_INTO_STARSHIP = await Promise.all(resPilotsStarship.map(async inner => await Promise.all(inner)));
 
-                const DATA_STARSHIPS: ResponseV1Models<StarshipsV1Models> = {
+                const DATA_STARSHIPS: ResponseV1Models<StarshipsV1Models<string>> = {
                     count: resJSONStarships.count,
                     previous: resJSONStarships.previous,
                     next: resJSONStarships.next,
-                    results: resJSONStarships.results.map((x: StarshipsV1Models, index: number) => {
+                    results: resJSONStarships.results.map((x: StarshipsV1Models<string>, index: number) => {
                         return {
                             name: x.name,
                             model: x.model,
@@ -409,7 +409,7 @@ export const FetchSearchApi = () => {
                             url: x.url,
                             created: x.created,
                             edited: x.edited
-                        } as StarshipsV1Models
+                        } as StarshipsV1Models<string>
                     })
                 }
 
@@ -417,27 +417,27 @@ export const FetchSearchApi = () => {
                 break;
 
             case 'vehicles':
-                let resJSONVehicles: ResponseV1Models<VehiclesV1Models> = await res.json()
+                let resJSONVehicles: ResponseV1Models<VehiclesV1Models<string>> = await res.json()
                     .catch((): void => {
                         dispatchHttp({type: "ERROR", errorMessage: 'Something went wrong: during data loading with Vehicles !'});
                     });
 
                 const resFilmsVehicles: Array<Array<Promise<any>>> = resJSONVehicles.results.map(
-                    (vehicle: VehiclesV1Models) => vehicle.films.map(
+                    (vehicle: VehiclesV1Models<string>) => vehicle.films.map(
                         (film: string) => fetch(film, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: FilmsV1Models) => data.title)
+                            .then((data: FilmsV1Models<string>) => data.title)
                             .then( (test: string) => console.log(test) )
                     )
                 );
 
                 const resPeopleVehicles: Array<Array<Promise<any>>> = resJSONVehicles.results.map(
-                    (vehicles: VehiclesV1Models) => vehicles.pilots.map(
+                    (vehicles: VehiclesV1Models<string>) => vehicles.pilots.map(
                         (people: string) => fetch(people, {
                             method: 'GET'
                         }).then(res => res.json())
-                            .then((data: PeopleV1Models) => data.name)
+                            .then((data: PeopleV1Models<string>) => data.name)
                             .then( (test: string) => console.log(test) )
                     )
                 );
@@ -445,11 +445,11 @@ export const FetchSearchApi = () => {
                 const FILM_INTO_VEHICLES = await Promise.all(resFilmsVehicles.map( async inner => await Promise.all( inner ) ));
                 const PEOPLE_INTO_VEHICLES = await Promise.all(resPeopleVehicles.map( async inner => await Promise.all( inner ) ));
 
-                const DATA_VEHICLES: ResponseV1Models<VehiclesV1Models> = {
+                const DATA_VEHICLES: ResponseV1Models<VehiclesV1Models<string>> = {
                     count: resJSONVehicles.count,
                     previous: resJSONVehicles.previous,
                     next: resJSONVehicles.next,
-                    results: resJSONVehicles.results.map( (x: VehiclesV1Models, index: number) => {
+                    results: resJSONVehicles.results.map( (x: VehiclesV1Models<string>, index: number) => {
                         return {
                             name: x.name,
                             model: x.model,
@@ -467,11 +467,11 @@ export const FetchSearchApi = () => {
                             url: x.url,
                             created: x.created,
                             edited: x.edited
-                        } as VehiclesV1Models
+                        } as VehiclesV1Models<string>
                     })
                 }
 
-                dispatchHttp({ type: "RESPONSE", message: DATA_VEHICLES });
+                dispatchHttp({ type: "RESPONSE", response: DATA_VEHICLES });
                 break;
 
             default:
