@@ -30,7 +30,7 @@ export const VehiclesSingle: React.FC = (): JSX.Element => {
                          alt={"Image of " + data?.name}/>
                 </Col>
                 <Col xs={12} className="mt-5">
-                    <h1>{data?.name}</h1>
+                    <h1 className="hyper-title">{data?.name}</h1>
                     <small className="mb-3">
                         Created at: {data?.created.split("T")[0]} | Edited at: {data?.created.split("T")[0]}
                     </small>
@@ -103,10 +103,10 @@ export const VehiclesSingle: React.FC = (): JSX.Element => {
                             <CardColumns>
                                 {
                                     data?.pilots.map((pilot: LinkModels) => (
-                                        <Card className="bg-dark">
+                                        <Card className="bg-dark p-3">
                                             <Card.Img variant="top"
                                                       src={process.env.PUBLIC_URL + "/img/pilot0" + pilot?.id + ".jpg"}/>
-                                            <Card.Title>{pilot?.label}</Card.Title>
+                                            <Card.Title className="mt-3 text-center">{pilot?.label}</Card.Title>
                                         </Card>
                                     ))
                                 }
@@ -117,7 +117,7 @@ export const VehiclesSingle: React.FC = (): JSX.Element => {
                     {
                         (data?.pilots.length === 0) && (
                             <Alert variant="danger">
-                                No pilots exist in database.
+                                No pilots exist in imperial database.
                             </Alert>
                         )
                     }

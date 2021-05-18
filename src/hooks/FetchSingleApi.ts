@@ -9,12 +9,6 @@ import {
     VehiclesV1Models
 } from "../models/api";
 import {LinkModels} from "../models/Link.models";
-import {PeopleSingleV1Models} from "../models/singles/PeopleSingle.v1.models";
-import {FilmSingleV1Models} from "../models/singles/FilmSingle.v1.models";
-import {PlanetSingleV1Models} from "../models/singles/PlanetSingle.v1.models";
-import {SpecieSingleV1Models} from "../models/singles/SpecieSingle.v1.models";
-import {StarshipSingleV1Models} from "../models/singles/StarshipSingle.v1.models";
-import {VehiclesSingleV1Models} from "../models/singles/VehiclesSingle.v1.models";
 
 export const FetchSingleApi = () => {
 
@@ -33,15 +27,15 @@ export const FetchSingleApi = () => {
         switch (entity) {
             case "people": {
 
-                const resJSONPeople: PeopleV1Models = await res.json()
+                const resJSONPeople: PeopleV1Models<string> = await res.json()
                     .catch(() => dispatchSingleState({
                         type: "ERROR",
                         errorMessage: "Something went wrong during loading data People"
                     }));
 
-                const resFilmPeople: Array<Promise<any>> = await resJSONPeople.films.map(
+                const resFilmPeople: Array<Promise<LinkModels>> = await resJSONPeople.films.map(
                     (film: string) => fetch(film, {method: 'GET'}).then(res => res.json())
-                        .then((data: FilmsV1Models) => {
+                        .then((data: FilmsV1Models<string>) => {
                             return {
                                 label: data?.title,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -49,9 +43,9 @@ export const FetchSingleApi = () => {
                         })
                 );
 
-                const resSpeciesPeople: Array<Promise<any>> = await resJSONPeople.species.map(
+                const resSpeciesPeople: Array<Promise<LinkModels>> = await resJSONPeople.species.map(
                     (film: string) => fetch(film, {method: "GET"}).then(res => res.json())
-                        .then((data: SpeciesV1Models) => {
+                        .then((data: SpeciesV1Models<LinkModels, string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -59,9 +53,9 @@ export const FetchSingleApi = () => {
                         })
                 );
 
-                const resStarshipPeople: Array<Promise<any>> = await resJSONPeople.starships.map(
+                const resStarshipPeople: Array<Promise<LinkModels>> = await resJSONPeople.starships.map(
                     (starship: string) => fetch(starship, { method: "GET"}).then( res => res.json())
-                        .then( (data: StarshipsV1Models) => {
+                        .then( (data: StarshipsV1Models<string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -69,9 +63,9 @@ export const FetchSingleApi = () => {
                         })
                 );
 
-                const resVehiclesPeople: Array<Promise<any>> = await resJSONPeople.vehicles.map(
+                const resVehiclesPeople: Array<Promise<LinkModels>> = await resJSONPeople.vehicles.map(
                     (vehicle: string) => fetch(vehicle, { method: "GET"}).then( res => res.json())
-                        .then( (data: VehiclesV1Models) => {
+                        .then( (data: VehiclesV1Models<string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -84,7 +78,7 @@ export const FetchSingleApi = () => {
                 const STARSHIPS_INTO_PEOPLE = await Promise.all(resStarshipPeople);
                 const VEHICLES_INTO_PEOPLE = await Promise.all(resVehiclesPeople);
 
-                const DATA_PEOPLE: PeopleSingleV1Models = {
+                const DATA_PEOPLE: PeopleV1Models<LinkModels> = {
                     ...resJSONPeople,
                     films: FILMS_INTO_PEOPLE,
                     species: SPECIES_INTO_PEOPLE,
@@ -98,11 +92,11 @@ export const FetchSingleApi = () => {
 
             case "film": {
 
-                const resJSONFilm: FilmsV1Models = await res.json();
+                const resJSONFilm: FilmsV1Models<string> = await res.json();
 
-                const resFilmPlanets: Array<Promise<any>> = await resJSONFilm.planets.map(
+                const resFilmPlanets: Array<Promise<LinkModels>> = await resJSONFilm.planets.map(
                     (planet: string) => fetch(planet, { method: "GET"}).then(res => res.json())
-                        .then( (data: PlanetsV1Models) => {
+                        .then( (data: PlanetsV1Models<string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -110,9 +104,9 @@ export const FetchSingleApi = () => {
                         })
                 );
 
-                const resFilmSpecies: Array<Promise<any>> = await resJSONFilm.species.map(
+                const resFilmSpecies: Array<Promise<LinkModels>> = await resJSONFilm.species.map(
                     (specie: string) => fetch(specie, { method: "GET"}).then( res => res.json())
-                        .then( (data: SpeciesV1Models) => {
+                        .then( (data: SpeciesV1Models<LinkModels, string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -120,9 +114,9 @@ export const FetchSingleApi = () => {
                         })
                 );
 
-                const resFilmPeople: Array<Promise<any>> = await resJSONFilm.characters.map(
+                const resFilmPeople: Array<Promise<LinkModels>> = await resJSONFilm.characters.map(
                     (people: string) => fetch(people, { method: "GET"}).then( res => res.json())
-                        .then( (data: PeopleV1Models) => {
+                        .then( (data: PeopleV1Models<string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -130,9 +124,9 @@ export const FetchSingleApi = () => {
                         })
                 );
 
-                const resFilmStarships: Array<Promise<any>> = await resJSONFilm.starships.map(
+                const resFilmStarships: Array<Promise<LinkModels>> = await resJSONFilm.starships.map(
                     (starship: string) => fetch(starship, { method: 'GET'}).then( res => res.json())
-                        .then( (data: StarshipsV1Models) => {
+                        .then( (data: StarshipsV1Models<string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -140,9 +134,9 @@ export const FetchSingleApi = () => {
                         })
                 );
 
-                const resFilmVehicles: Array<Promise<any>> = await resJSONFilm.vehicles.map(
+                const resFilmVehicles: Array<Promise<LinkModels>> = await resJSONFilm.vehicles.map(
                     (vehicles: string) => fetch(vehicles, {method: "GET"}).then( res => res.json())
-                        .then( (data: StarshipsV1Models) => {
+                        .then( (data: StarshipsV1Models<string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -156,7 +150,7 @@ export const FetchSingleApi = () => {
                 const STARSHIPS_INTO_FILM = await Promise.all(resFilmStarships.map(async inner => inner));
                 const VEHICLES_INTO_FILM = await Promise.all(resFilmVehicles.map(async inner => inner ));
 
-                const DATA_FILMS: FilmSingleV1Models = {
+                const DATA_FILMS: FilmsV1Models<LinkModels> = {
                     ...resJSONFilm,
                     planets: PLANETS_INTO_FILM,
                     species: SPECIES_INTO_FILM,
@@ -171,11 +165,11 @@ export const FetchSingleApi = () => {
 
             case "planet":
 
-                const resJSONPlanet: PlanetsV1Models = await res.json();
+                const resJSONPlanet: PlanetsV1Models<string> = await res.json();
 
                 const resPlanetFilms: Array<Promise<LinkModels>> = await resJSONPlanet.films.map(
                     (film: string) => fetch(film, { method: "GET"}).then( res => res.json())
-                        .then( (data: FilmsV1Models) => {
+                        .then( (data: FilmsV1Models<string>) => {
                             return {
                                 label: data?.title,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -185,7 +179,7 @@ export const FetchSingleApi = () => {
 
                 const resPlanetPeople: Array<Promise<LinkModels>> = await resJSONPlanet.residents.map(
                     (people: string) => fetch(people, { method: "GET"}).then( res => res.json())
-                        .then( (data: PeopleV1Models) => {
+                        .then( (data: PeopleV1Models<string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -196,7 +190,7 @@ export const FetchSingleApi = () => {
                 const FILM_INTO_PLANET = await Promise.all(resPlanetFilms);
                 const PEOPLE_INTO_PLANET = await Promise.all(resPlanetPeople);
 
-                const DATA_PLANET: PlanetSingleV1Models = {
+                const DATA_PLANET: PlanetsV1Models<LinkModels> = {
                     ...resJSONPlanet,
                     residents: PEOPLE_INTO_PLANET,
                     films: FILM_INTO_PLANET
@@ -207,11 +201,11 @@ export const FetchSingleApi = () => {
 
             case "specie":
 
-                const resJSONSpecie: SpeciesV1Models = await res.json();
+                const resJSONSpecie: SpeciesV1Models<string, string> = await res.json();
 
                 const resSpecieFilms: Array<Promise<LinkModels>> = await resJSONSpecie.films.map(
                     (film: string) => fetch(film, { method: "GET"}).then( res => res.json())
-                        .then( (data: FilmsV1Models) => {
+                        .then( (data: FilmsV1Models<string>) => {
                             return {
                                 label: data?.title,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -221,7 +215,7 @@ export const FetchSingleApi = () => {
 
                 const resSpeciePeople: Array<Promise<LinkModels>> = await resJSONSpecie.people.map(
                     (people: string) => fetch(people, { method: "GET"}).then( res => res.json())
-                        .then( (data: PeopleV1Models) => {
+                        .then( (data: PeopleV1Models<string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -230,7 +224,7 @@ export const FetchSingleApi = () => {
                 );
 
                 const resSpeciesOrigin = await fetch(resJSONSpecie.homeworld, { method: "GET"}).then( res => res.json()
-                    .then( (data: PlanetsV1Models) => {
+                    .then( (data: PlanetsV1Models<string>) => {
                         return {
                             label: data?.name,
                             id: data?.url.match(/\d+/gm)![0]
@@ -241,7 +235,7 @@ export const FetchSingleApi = () => {
                 const FILM_INTO_SPECIE = await Promise.all(resSpecieFilms);
                 const PEOPLE_INTO_SPECIE = await Promise.all(resSpeciePeople);
 
-                const DATA_SPECIE: SpecieSingleV1Models = {
+                const DATA_SPECIE: SpeciesV1Models<LinkModels, string> = {
                     ...resJSONSpecie,
                     people: PEOPLE_INTO_SPECIE,
                     films: FILM_INTO_SPECIE,
@@ -253,11 +247,11 @@ export const FetchSingleApi = () => {
 
             case "starship":
 
-                const resJSONStarship: StarshipsV1Models = await res.json();
+                const resJSONStarship: StarshipsV1Models<string> = await res.json();
 
                 const resStarshipFilm: Array<Promise<LinkModels>> = await resJSONStarship.films.map(
                     (film: string ) => fetch(film, { method: "GET"}).then( res => res.json())
-                        .then( (data: FilmsV1Models) => {
+                        .then( (data: FilmsV1Models<string>) => {
                             return {
                                 label: data?.title,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -267,7 +261,7 @@ export const FetchSingleApi = () => {
 
                 const resStarshipPeople: Array<Promise<LinkModels>> = await resJSONStarship.pilots.map(
                     (people: string) => fetch(people, { method: "GET"}).then( res => res.json())
-                        .then( (data: PeopleV1Models) => {
+                        .then( (data: PeopleV1Models<string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -278,7 +272,7 @@ export const FetchSingleApi = () => {
                 const FILM_INTO_STARSHIP = await Promise.all(resStarshipFilm);
                 const PEOPLE_INTO_STARSHIP = await Promise.all(resStarshipPeople);
 
-                const DATA_STARSHIP: StarshipSingleV1Models = {
+                const DATA_STARSHIP: StarshipsV1Models<LinkModels> = {
                     ...resJSONStarship,
                     films: FILM_INTO_STARSHIP,
                     pilots: PEOPLE_INTO_STARSHIP
@@ -288,11 +282,11 @@ export const FetchSingleApi = () => {
                 break;
 
             case "vehicle":
-                const resJSONVehicle: VehiclesV1Models = await res.json();
+                const resJSONVehicle: VehiclesV1Models<string> = await res.json();
 
                 const resVehicleFilm: Array<Promise<LinkModels>> = resJSONVehicle.films.map(
                     (film: string) => fetch( film, { method: "GET"}).then( res => res.json())
-                        .then( (data: FilmsV1Models) => {
+                        .then( (data: FilmsV1Models<string>) => {
                             return {
                                 label: data?.title,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -302,7 +296,7 @@ export const FetchSingleApi = () => {
 
                 const resVehiclePeople: Array<Promise<LinkModels>> = resJSONVehicle.pilots.map(
                     (people: string) => fetch( people, { method: "GET"}).then( res => res.json())
-                        .then( (data: PeopleV1Models) => {
+                        .then( (data: PeopleV1Models<string>) => {
                             return {
                                 label: data?.name,
                                 id: data?.url.match(/\d+/gm)![0]
@@ -313,7 +307,7 @@ export const FetchSingleApi = () => {
                 const FILMS_INTO_VEHICLES = await Promise.all(resVehicleFilm);
                 const PEOPLE_INTO_VEHICLES = await Promise.all(resVehiclePeople);
 
-                const DATA_VEHICLES: VehiclesSingleV1Models = {
+                const DATA_VEHICLES: VehiclesV1Models<LinkModels> = {
                     ...resJSONVehicle,
                     films: FILMS_INTO_VEHICLES,
                     pilots: PEOPLE_INTO_VEHICLES,

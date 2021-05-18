@@ -42,7 +42,7 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
                             </Col>
 
                             <Col xs={12} md={9}>
-                                <h1>{data?.title}</h1>
+                                <h1 className="hyper-title">{data?.title}</h1>
                                 <small>
                                     Created at: {data?.created.split("T")[0]} | Edited at: {data?.created.split("T")[0]}
                                 </small>

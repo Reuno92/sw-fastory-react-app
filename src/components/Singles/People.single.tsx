@@ -38,7 +38,7 @@ export const PeopleSingle: React.FC = (): JSX.Element => {
                                     alt={"Image of " + data?.name}/>
                             </Col>
                             <Col xs={10}>
-                                <h1>{data?.name}</h1>
+                                <h1 className="hyper-title">{data?.name}</h1>
                                 <small>
                                     Created at: {data?.created.split("T")[0]} | Edited at: {data?.created.split("T")[0]}
                                 </small>
@@ -81,9 +81,23 @@ export const PeopleSingle: React.FC = (): JSX.Element => {
                                         colors
                                     </h2>
                                     <ul className="list-group">
-                                        <li className="list-group-item bg-dark">Skin: {data?.skin_color}</li>
-                                        <li className="list-group-item bg-dark">Eye: {data?.eye_color}</li>
-                                        <li className="list-group-item bg-dark">Hair: {data?.hair_color}</li>
+                                        <li className="list-group-item bg-dark">
+                                            Skin: {data?.skin_color}
+                                        </li>
+                                        <li className="list-group-item bg-dark">
+                                            Eye:
+                                            <div className="badge badge-pill d-inline"
+                                                 style={{"backgroundColor": data?.eye_color, "marginRight": "5px"}}>
+                                                <span>{data?.eye_color}</span>
+                                            </div>
+                                        </li>
+                                        <li className="list-group-item bg-dark">
+                                            Hair:
+                                            <div className="badge badge-pill d-inline"
+                                                       style={{"backgroundColor": data?.hair_color, "marginRight": "5px"}}>
+                                            <span>{data?.hair_color}</span>
+                                        </div>
+                                        </li>
                                     </ul>
 
                                 </Col>
@@ -99,14 +113,15 @@ export const PeopleSingle: React.FC = (): JSX.Element => {
                                                 <Card key={film?.id} className="bg-dark p-3">
                                                     <Card.Img variant="top" src={process.env.PUBLIC_URL + "/img/film0" + film?.id + ".jpg"} />
                                                     <Card.Body>
-                                                        <Card.Title>
+                                                        <Card.Title className="text-center mt-3">
                                                             {film?.label}
                                                         </Card.Title>
                                                     </Card.Body>
 
                                                 </Card>
                                             }</Link>
-                                        ))
+                                        )
+                                    )
                                 }
                             </CardColumns>
 
@@ -123,7 +138,8 @@ export const PeopleSingle: React.FC = (): JSX.Element => {
                                                             {starship?.label}
                                                         </li>
                                                     </Link>
-                                                ))
+                                                )
+                                            )
                                         }
                                     </ul>
                                 </Col>
@@ -132,12 +148,13 @@ export const PeopleSingle: React.FC = (): JSX.Element => {
                                     <ul className="list-group">
                                         {
                                             data?.vehicles.map((vehicle: LinkModels) => (
-                                                <Link to={"/vehicles/" + vehicle?.id}>
+                                                <Link to={"/vehicle/" + vehicle?.id}>
                                                     <li key={vehicle?.id} className="list-group-item bg-dark">
                                                         {vehicle?.label}
                                                     </li>
                                                 </Link>
-                                            ))
+                                                )
+                                            )
                                         }
                                     </ul>
                                 </Col>

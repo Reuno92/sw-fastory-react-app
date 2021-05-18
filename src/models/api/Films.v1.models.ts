@@ -3,7 +3,7 @@
  *
  * Define resource for films endpoints
  */
-export class FilmsV1Models {
+export class FilmsV1Models<T> {
   /**
    *
    * @param { string } title - The title of this film
@@ -28,11 +28,11 @@ export class FilmsV1Models {
     public director: string,
     public producer: string,
     public release_date: string,
-    public species: Array<string>,
-    public starships: Array<string>,
-    public vehicles: Array<string>,
-    public characters: Array<string>,
-    public planets: Array<string>,
+    public species: Array<T>,
+    public starships: Array<T>,
+    public vehicles: Array<T>,
+    public characters: Array<T>,
+    public planets: Array<T>,
     public url: string,
     public created: string,
     public edited: string
