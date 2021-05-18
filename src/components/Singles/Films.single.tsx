@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useHistory, useParams, Link} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import {FetchSingleApi} from "../../hooks/FetchSingleApi";
 import {CardColumns, Card, Col, Container, Row, Spinner} from "react-bootstrap";
 import {formatDistance, formatRelative, subDays} from 'date-fns';
