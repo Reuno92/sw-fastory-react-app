@@ -471,7 +471,7 @@ export const FetchSearchApi = () => {
                     })
                 }
 
-                dispatchHttp({ type: "RESPONSE", message: DATA_VEHICLES });
+                dispatchHttp({ type: "RESPONSE", response: DATA_VEHICLES });
                 break;
 
             default:
