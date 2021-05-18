@@ -14,7 +14,7 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
     useEffect(() => {
 
         if (id) {
-            sendSingleRequest("http://localhost:7000/api/v1/films/" + id, "GET", "film");
+            sendSingleRequest("http://localhost:7000/api/v1/films/" + id, "GET", "film")
         }
 
     }, [sendSingleRequest, id]);
@@ -44,7 +44,7 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
                             <Col xs={12} md={9}>
                                 <h1 className="hyper-title">{data?.title}</h1>
                                 <small>
-                                    Created at: {data?.created.split("T")[0]} | Edited at: {data?.created.split("T")[0]}
+                                    Created at: {data?.created.split("T")[0]} | Edited at: {data?.edited.split("T")[0]}
                                 </small>
                                 <p className="mt-3">{data?.opening_crawl}</p>
                                 <Row>
@@ -94,6 +94,7 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
                             </Col>
                         </Row>
                         <CardColumns>
+
                             <Card className="bg-dark">
                                 <Card.Body>
                                     <Card.Title>
@@ -112,6 +113,7 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
                                     </ul>
                                 </Card.Body>
                             </Card>
+
                             <Card className="bg-dark">
                                 <Card.Body>
                                     <Card.Title>
@@ -130,6 +132,7 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
                                     </ul>
                                 </Card.Body>
                             </Card>
+
                             <Card className="bg-dark">
                                 <Card.Body>
                                     <Card.Title>
@@ -148,6 +151,7 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
                                     </ul>
                                 </Card.Body>
                             </Card>
+
                             <Card className="bg-dark">
                                 <Card.Body>
                                     <Card.Title>

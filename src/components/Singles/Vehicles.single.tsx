@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import {FetchSingleApi} from "../../hooks/FetchSingleApi";
 import {Alert, Card, CardColumns, Col, Container, Row} from "react-bootstrap";
 import {LinkModels} from "../../models/Link.models";
+import {FaEmpire} from "react-icons/fa";
 
 export const VehiclesSingle: React.FC = (): JSX.Element => {
 
@@ -116,8 +117,9 @@ export const VehiclesSingle: React.FC = (): JSX.Element => {
                     }
                     {
                         (data?.pilots.length === 0) && (
-                            <Alert variant="danger">
-                                No pilots exist in imperial database.
+                            <Alert variant="danger d-flex justify-content-between">
+                                <FaEmpire size="24" className="mr-2"/> No pilots exist in Imperial database. <FaEmpire
+                                size="24" className="mr-2"/>
                             </Alert>
                         )
                     }
@@ -131,11 +133,13 @@ export const VehiclesSingle: React.FC = (): JSX.Element => {
                         {
                             data?.films.map(
                                 (film: LinkModels) => (
-                                    <Card className="bg-dark p-3 text-center">
-                                        <Card.Img variant="top"
-                                                  src={process.env.PUBLIC_URL + "/img/Film0" + film?.id + ".jpg"}/>
-                                        <Card.Title className="mt-3">{film?.label}</Card.Title>
-                                    </Card>
+                                    <Link to={"/film/" + film?.id }>
+                                        <Card className="bg-dark p-3 text-center">
+                                            <Card.Img variant="top"
+                                                      src={process.env.PUBLIC_URL + "/img/Film0" + film?.id + ".jpg"}/>
+                                            <Card.Title className="mt-3">{film?.label}</Card.Title>
+                                        </Card>
+                                    </Link>
                                 )
                             )
                         }
@@ -143,5 +147,5 @@ export const VehiclesSingle: React.FC = (): JSX.Element => {
                 </Col>
             </Row>
         </Container>
-)
+    )
 }
