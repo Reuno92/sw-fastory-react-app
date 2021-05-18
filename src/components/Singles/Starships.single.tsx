@@ -54,69 +54,70 @@ export const StarshipsSingle: React.FC = (): JSX.Element => {
             </Row>
 
             <Row className="mt-5">
-                <Col xs={4}>
+                <Col xs={12} md={4}>
                     <h2>Technical Data</h2>
                     <table className="list-unstyled">
                         <tr>
                             <td className="pr-4">Class</td>
-                            <td>{ data?.starship_class.charAt(0).toUpperCase() + data?.starship_class.slice(1) }</td>
+                            <td>{data?.starship_class.charAt(0).toUpperCase() + data?.starship_class.slice(1)}</td>
                         </tr>
 
                         <tr>
                             <td className="pr-4">Length</td>
-                            <td>{ data?.length } meters</td>
+                            <td>{data?.length} meters</td>
                         </tr>
 
                         <tr>
                             <td className="pr-4">Autonomy</td>
-                            <td>{ data?.consumables }</td>
+                            <td>{data?.consumables}</td>
                         </tr>
 
                         <tr>
                             <td className="pr-4">Max. Atmospheric Speed</td>
-                            <td>{ data?.max_atmosphering_speed }</td>
+                            <td>{data?.max_atmosphering_speed}</td>
                         </tr>
 
                         <tr>
                             <td className="pr-4">MegaLight per Hour</td>
-                            <td>{ data?.MGLT } MGLT</td>
+                            <td>{data?.MGLT} MGLT</td>
                         </tr>
 
                         <tr>
                             <td className="pr-4">Hyperdrive Rating</td>
-                            <td>{ data?.hyperdrive_rating }</td>
+                            <td>{data?.hyperdrive_rating}</td>
                         </tr>
 
                         <tr>
                             <td className="pr-4">Cargo Capacity</td>
-                            <td>{ data?.cargo_capacity }</td>
+                            <td>{data?.cargo_capacity}</td>
                         </tr>
 
                         <tr>
                             <td className="pr-4">Crew</td>
-                            <td>{ data?.crew } members</td>
+                            <td>{data?.crew} members</td>
                         </tr>
 
                         <tr>
                             <td className="pr-4">Passengers</td>
-                            <td>{ data?.passengers } persons</td>
+                            <td>{data?.passengers} persons</td>
                         </tr>
 
                         <tr>
                             <td className="pr-4">Cost</td>
-                            <td>{ data?.cost_in_credits } CR</td>
+                            <td>{data?.cost_in_credits} CR</td>
                         </tr>
                     </table>
                 </Col>
-                <Col xs={8}>
+                <Col xs={12} md={8}>
                     <h2>Members</h2>
                     {
                         (data?.pilots.length > 0) && (
                             <CardColumns>
                                 {
-                                    data?.pilots.map( (pilot: LinkModels) => (
+                                    data?.pilots.map((pilot: LinkModels) => (
                                         <Card className="bg-dark">
-                                            <Card.Img variant="top" src={process.env.PUBLIC_URL + "/img/pilot0" + pilot?.id + ".jpg"} />
+                                            <Card.Img variant="top"
+                                                      src={process.env.PUBLIC_URL + "/img/pilot0" + pilot?.id + ".jpg"}/>
                                             <Card.Title>{pilot?.label}</Card.Title>
                                         </Card>
                                     ))
@@ -136,18 +137,21 @@ export const StarshipsSingle: React.FC = (): JSX.Element => {
             </Row>
 
             <Row className="mt-5">
-                <CardColumns>
-                {
-                    data?.films.map(
-                        (film: LinkModels) => (
-                            <Card className="bg-dark p-3 text-center">
-                                <Card.Img variant="top" src={process.env.PUBLIC_URL + "/img/Film0" + film?.id + ".jpg"} />
-                                <Card.Title className="mt-3">{film?.label}</Card.Title>
-                            </Card>
-                        )
-                    )
-                }
-                </CardColumns>
+                <Col xs={12}>
+                    <CardColumns>
+                        {
+                            data?.films.map(
+                                (film: LinkModels) => (
+                                    <Card className="bg-dark p-3 text-center">
+                                        <Card.Img variant="top"
+                                                  src={process.env.PUBLIC_URL + "/img/Film0" + film?.id + ".jpg"}/>
+                                        <Card.Title className="mt-3">{film?.label}</Card.Title>
+                                    </Card>
+                                )
+                            )
+                        }
+                    </CardColumns>
+                </Col>
             </Row>
         </Container>
     )

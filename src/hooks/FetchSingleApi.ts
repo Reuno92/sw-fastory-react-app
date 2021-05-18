@@ -14,6 +14,7 @@ import {FilmSingleV1Models} from "../models/singles/FilmSingle.v1.models";
 import {PlanetSingleV1Models} from "../models/singles/PlanetSingle.v1.models";
 import {SpecieSingleV1Models} from "../models/singles/SpecieSingle.v1.models";
 import {StarshipSingleV1Models} from "../models/singles/StarshipSingle.v1.models";
+import {VehiclesSingleV1Models} from "../models/singles/VehiclesSingle.v1.models";
 
 export const FetchSingleApi = () => {
 
@@ -289,9 +290,36 @@ export const FetchSingleApi = () => {
             case "vehicle":
                 const resJSONVehicle: VehiclesV1Models = await res.json();
 
-                console.log(resJSONVehicle);
+                const resVehicleFilm: Array<Promise<LinkModels>> = resJSONVehicle.films.map(
+                    (film: string) => fetch( film, { method: "GET"}).then( res => res.json())
+                        .then( (data: FilmsV1Models) => {
+                            return {
+                                label: data?.title,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
 
-                dispatchSingleState({type: "RESPONSE", message: resJSONVehicle});
+                const resVehiclePeople: Array<Promise<LinkModels>> = resJSONVehicle.pilots.map(
+                    (people: string) => fetch( people, { method: "GET"}).then( res => res.json())
+                        .then( (data: PeopleV1Models) => {
+                            return {
+                                label: data?.name,
+                                id: data?.url.match(/\d+/gm)![0]
+                            } as unknown as LinkModels
+                        })
+                );
+
+                const FILMS_INTO_VEHICLES = await Promise.all(resVehicleFilm);
+                const PEOPLE_INTO_VEHICLES = await Promise.all(resVehiclePeople);
+
+                const DATA_VEHICLES: VehiclesSingleV1Models = {
+                    ...resJSONVehicle,
+                    films: FILMS_INTO_VEHICLES,
+                    pilots: PEOPLE_INTO_VEHICLES,
+                };
+
+                dispatchSingleState({type: "RESPONSE", response: DATA_VEHICLES });
                 break;
             default: {
                 dispatchSingleState({type: "ERROR", errorMessage: "Resource entity is wrong…"})
