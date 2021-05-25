@@ -4,11 +4,11 @@ import {FetchSingleApi} from "../../hooks/FetchSingleApi";
 import {Link} from "react-router-dom";
 import {CardColumns, Card, Col, Container, Row, ListGroup} from "react-bootstrap";
 import {LinkModels} from "../../models/Link.models";
+import {getRelativeISODate} from "../../constant/Dates";
 
 const PlanetsSingle: React.FC = (): JSX.Element => {
 
     let {id} = useParams<{ id: string | undefined }>();
-    const [error, setError] = useState<{ isError: boolean, reason: string }>({isError: false, reason: ""});
     const {sendSingleRequest, data, isLoading} = FetchSingleApi();
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const PlanetsSingle: React.FC = (): JSX.Element => {
                             <Col xs={12} md={6}>
                                 <h1 className="hyper-title">{data?.name}</h1>
                                 <small>
-                                    Created at: {data?.created.split("T")[0]} | Edited at: {data?.created.split("T")[0]}
+                                    Created at: {getRelativeISODate(data?.created)} | Edited at: {getRelativeISODate(data?.created)}
                                 </small>
                                 <Row className="mt-2">
                                     <Col xs={12} md={5}>

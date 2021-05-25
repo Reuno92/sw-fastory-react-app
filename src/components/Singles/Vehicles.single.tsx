@@ -4,6 +4,7 @@ import {FetchSingleApi} from "../../hooks/FetchSingleApi";
 import {Alert, Card, CardColumns, Col, Container, Row} from "react-bootstrap";
 import {LinkModels} from "../../models/Link.models";
 import {FaEmpire} from "react-icons/fa";
+import {getRelativeISODate} from "../../constant/Dates";
 
 const VehiclesSingle: React.FC = (): JSX.Element => {
 
@@ -33,7 +34,7 @@ const VehiclesSingle: React.FC = (): JSX.Element => {
                 <Col xs={12} className="mt-5">
                     <h1 className="hyper-title">{data?.name}</h1>
                     <small className="mb-3">
-                        Created at: {data?.created.split("T")[0]} | Edited at: {data?.created.split("T")[0]}
+                        Created at: {getRelativeISODate(data?.created)} | Edited at: {getRelativeISODate(data?.created)}
                     </small>
                 </Col>
             </Row>

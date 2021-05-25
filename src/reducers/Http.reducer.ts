@@ -14,7 +14,7 @@ export const httpReducer = (currentHttpState: any, action: any) => {
     switch (action.type) {
         case "SEND":
             return {
-                loading: true,
+                isLoading: true,
                 error: null,
                 data: null,
                 payload: action.identifier,
@@ -23,7 +23,7 @@ export const httpReducer = (currentHttpState: any, action: any) => {
         case "RESPONSE":
             return {
                 ...currentHttpState,
-                loading: false,
+                isLoading: false,
                 data: action.response,
                 firstTime: false,
             }

@@ -1,8 +1,10 @@
 import {Fragment, PropsWithChildren, useCallback, useEffect} from "react";
 import FetchApi from "../../hooks/FetchSearchApi";
 import {Alert, Table} from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import {PeopleV1Models, PlanetsV1Models, FilmsV1Models, SpeciesV1Models, StarshipsV1Models, VehiclesV1Models} from "../../models/api";
+import {useHistory} from "react-router-dom";
+import {isFilms, isPeople, isPlanets, isSpecies, isStarships, isVehicles} from "../../constant/guard";
+import firstLetter from "../../constant/firstLetter";
+import {getRelativeISODate} from "../../constant/Dates";
 
 type SearchResultType = {
     results: any
@@ -14,37 +16,9 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
 
     const history = useHistory();
 
-    const isPeople = (obj: any): obj is PeopleV1Models<string> => {
-        return obj.hair_color !== undefined
-    }
-
-    const isPlanets = (obj: any): obj is PlanetsV1Models<string> => {
-        return obj.population !== undefined
-    }
-
-    const isFilms = (obj: any): obj is FilmsV1Models<string> => {
-        return obj.title !== undefined
-    }
-
-    const isSpecies = (obj: any): obj is SpeciesV1Models<string, string> => {
-        return obj.average_height !== undefined
-    }
-
-    const isStarships = (obj: any): obj is StarshipsV1Models<string> => {
-        return obj.hyperdrive_rating !== undefined
-    }
-
-    const isVehicles = (obj: any): obj is VehiclesV1Models<string> => {
-        return obj.max_atmosphering_speed !== undefined
-    }
-
     useEffect( () => {
         console.log(results);
     }, [results]);
-
-    function firstLetter(gender: string) {
-        return gender.charAt(0).toUpperCase() + gender.slice(1);
-    }
 
     const goToSingle = useCallback((id: string, entity: string) => { history.push(`/${entity}/${id}`) }, [history]);
 
@@ -192,8 +166,8 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>{firstLetter(result?.gender)}</td>
                                                     <td>{result?.homeworld}</td>
                                                     <td>{result?.films.join(', ')}</td>
-                                                    <td>{result?.created.split('T')[0]}</td>
-                                                    <td>{result?.edited.split('T')[0]}</td>
+                                                    <td>{getRelativeISODate(result?.created)}</td>
+                                                    <td>{getRelativeISODate(result?.edited)}</td>
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
@@ -204,6 +178,7 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                 </Fragment>
                                             )
                                         }
+
                                         {
                                             isPlanets(results.results[0]) && (
                                                 <Fragment>
@@ -211,8 +186,8 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>{result?.diameter}</td>
                                                     <td>{result?.population}</td>
                                                     <td>{result?.films.join(', ')}</td>
-                                                    <td>{result?.created.split('T')[0]}</td>
-                                                    <td>{result?.edited.split('T')[0]}</td>
+                                                    <td>{getRelativeISODate(result?.created)}</td>
+                                                    <td>{getRelativeISODate(result?.edited)}</td>
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
@@ -230,8 +205,8 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>{result?.release_date}</td>
                                                     <td>{result?.director}</td>
                                                     <td>{result?.producer}</td>
-                                                    <td>{result?.created.split('T')[0]}</td>
-                                                    <td>{result?.edited.split('T')[0]}</td>
+                                                    <td>{getRelativeISODate(result?.created)}</td>
+                                                    <td>{getRelativeISODate(result?.edited)}</td>
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
@@ -249,8 +224,8 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>{result?.classification}</td>
                                                     <td>{result?.designation}</td>
                                                     <td>{result?.language}</td>
-                                                    <td>{result?.created.split('T')[0]}</td>
-                                                    <td>{result?.edited.split('T')[0]}</td>
+                                                    <td>{getRelativeISODate(result?.created)}</td>
+                                                    <td>{getRelativeISODate(result?.edited)}</td>
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
@@ -269,8 +244,8 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>{result?.manufacturer}</td>
                                                     <td>{result?.cost_in_credits}</td>
                                                     <td>{result?.length}</td>
-                                                    <td>{result?.created.split('T')[0]}</td>
-                                                    <td>{result?.edited.split('T')[0]}</td>
+                                                    <td>{getRelativeISODate(result?.created)}</td>
+                                                    <td>{getRelativeISODate(result?.edited)}</td>
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"
@@ -289,8 +264,8 @@ const SearchResult = (props: PropsWithChildren<SearchResultType>) => {
                                                     <td>{result?.manufacturer}</td>
                                                     <td>{result?.cost_in_credits}</td>
                                                     <td>{result?.length}</td>
-                                                    <td>{result?.created}</td>
-                                                    <td>{result?.edited}</td>
+                                                    <td>{getRelativeISODate(result?.created)}</td>
+                                                    <td>{getRelativeISODate(result?.edited)}</td>
                                                     <td>
                                                         <button
                                                             className="btn btn-primary"

@@ -1,6 +1,6 @@
 # TODO
 
-* Replace date by relative dates without **birth_year** in people. E.g. created and updated.
+* ~~Replace date by relative dates without **birth_year** in people. E.g. created and updated.~~ 
 * Create Custom Hooks for colors. For example, hair_colors give nothing with any value. e.g. "blond".
 * Same for eyes.
 * Create Condition for hidden a row if a person do not ride starships or vehicles.

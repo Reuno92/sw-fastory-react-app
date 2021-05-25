@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useParams, Link} from "react-router-dom";
 import {FetchSingleApi} from "../../hooks/FetchSingleApi";
 import {CardColumns, Card, Col, Container, Row, Spinner} from "react-bootstrap";
 import {formatDistance, formatRelative, subDays} from 'date-fns';
 import {LinkModels} from "../../models/Link.models";
+import {getRelativeISODate} from "../../constant/Dates";
 
 const FilmsSingle: React.FC = (): JSX.Element => {
 
     let {id} = useParams<{ id: string | undefined }>();
-    const [error, setError] = useState<{ isError: boolean, reason: string }>({isError: false, reason: ""});
     const {sendSingleRequest, data, isLoading} = FetchSingleApi();
 
     useEffect(() => {
@@ -44,7 +44,7 @@ const FilmsSingle: React.FC = (): JSX.Element => {
                             <Col xs={12} md={9}>
                                 <h1 className="hyper-title">{data?.title}</h1>
                                 <small>
-                                    Created at: {data?.created.split("T")[0]} | Edited at: {data?.edited.split("T")[0]}
+                                    Created at: {getRelativeISODate(data?.created)} | Edited at: {getRelativeISODate(data?.edited)}
                                 </small>
                                 <p className="mt-3">{data?.opening_crawl}</p>
                                 <Row>

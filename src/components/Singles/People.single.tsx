@@ -3,6 +3,7 @@ import {Col, Container, Row, Spinner, CardColumns, Card, Alert} from "react-boot
 import {Link, useHistory, useParams} from "react-router-dom";
 import {LinkModels} from "../../models/Link.models";
 import {FetchSingleApi} from "../../hooks/FetchSingleApi";
+import {getRelativeISODate} from "../../constant/Dates";
 
 const PeopleSingle: React.FC = (): JSX.Element => {
 
@@ -40,7 +41,7 @@ const PeopleSingle: React.FC = (): JSX.Element => {
                             <Col xs={10}>
                                 <h1 className="hyper-title">{data?.name}</h1>
                                 <small>
-                                    Created at: {data?.created.split("T")[0]} | Edited at: {data?.created.split("T")[0]}
+                                    Created at: {getRelativeISODate(data?.created)} | Edited at: {getRelativeISODate(data?.created)}
                                 </small>
                             </Col>
                         </Row>

@@ -130,8 +130,9 @@ const StarshipsSingle: React.FC = (): JSX.Element => {
                     {
                         (data?.pilots.length === 0) && (
                             <Alert variant="danger d-flex justify-content-between">
-                                <FaEmpire size="24" className="mr-2"/> No pilots exist in Imperial database. <FaEmpire
-                                size="24" className="mr-2"/>
+                                <FaEmpire size="24" className="mr-2"/>
+                                No pilots exist in Imperial database.
+                                <FaEmpire size="24" className="mr-2"/>
                             </Alert>
                         )
                     }
