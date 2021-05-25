@@ -29,27 +29,6 @@ function App() {
                             <Header user={user} dispatch={dispatch}/>
                             <main>
                                 <Router routes={appRoutesArray} />
-                                {/*<Route exact path="/search">
-                                    <Search />
-                                </Route>
-                                <Route path="/people/:id">
-                                    <PeopleSingle />
-                                </Route>
-                                <Route path="/film/:id">
-                                    <FilmsSingle />
-                                </Route>
-                                <Route path="/planet/:id">
-                                    <PlanetsSingle />
-                                </Route>
-                                <Route path="/specie/:id">
-                                    <SpeciesSingle />
-                                </Route>
-                                <Route path="/starship/:id">
-                                    <StarshipsSingle />
-                                </Route>
-                                <Route path="/vehicle/:id">
-                                    <VehiclesSingle />
-                                </Route>*/}
                             </main>
                         </Fragment>
                     )

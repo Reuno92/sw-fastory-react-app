@@ -1,12 +1,10 @@
-import React, {ComponentType, FC, lazy, LazyExoticComponent, ReactNode} from 'react';
-import Login from "./components/Login";
-import Search from "./components/Search";
-import PeopleSingle from "./components/Singles/People.single";
-import FilmsSingle from "./components/Singles/Films.single";
-import PlanetsSingle from "./components/Singles/Planets.single";
-import SpeciesSingle from "./components/Singles/Species.single";
-import StarshipsSingle from "./components/Singles/Starships.single";
-import VehiclesSingle from "./components/Singles/Vehicles.single";
+import {ComponentType, lazy, LazyExoticComponent, ReactNode} from 'react';
+
+/**
+ *
+ * Sample: https://medium.com/@michael.kutateladze/react-router-with-a-single-config-file-61777f306b4f
+ * Thank to Michael Kutateladze.
+ */
 
 export interface AppRoute {
     key: string
