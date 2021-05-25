@@ -5,7 +5,7 @@ import {FetchSingleApi} from "../../hooks/FetchSingleApi";
 import {LinkModels} from "../../models/Link.models";
 import {FaEmpire} from "react-icons/fa";
 
-export const StarshipsSingle: React.FC = (): JSX.Element => {
+const StarshipsSingle: React.FC = (): JSX.Element => {
 
     let {id} = useParams<{ id: string | undefined }>();
     const [error, setError] = useState<{ isError: boolean, reason: string }>({isError: false, reason: ""});
@@ -160,3 +160,5 @@ export const StarshipsSingle: React.FC = (): JSX.Element => {
         </Container>
     )
 }
+
+export default StarshipsSingle;

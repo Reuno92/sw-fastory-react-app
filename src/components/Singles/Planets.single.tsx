@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {CardColumns, Card, Col, Container, Row, ListGroup} from "react-bootstrap";
 import {LinkModels} from "../../models/Link.models";
 
-export const PlanetsSingle: React.FC = (): JSX.Element => {
+const PlanetsSingle: React.FC = (): JSX.Element => {
 
     let {id} = useParams<{ id: string | undefined }>();
     const [error, setError] = useState<{ isError: boolean, reason: string }>({isError: false, reason: ""});
@@ -87,3 +87,5 @@ export const PlanetsSingle: React.FC = (): JSX.Element => {
         </Container>
     )
 }
+
+export default PlanetsSingle;

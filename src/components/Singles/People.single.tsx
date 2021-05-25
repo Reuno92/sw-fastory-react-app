@@ -4,7 +4,7 @@ import {Link, useHistory, useParams} from "react-router-dom";
 import {LinkModels} from "../../models/Link.models";
 import {FetchSingleApi} from "../../hooks/FetchSingleApi";
 
-export const PeopleSingle: React.FC = (): JSX.Element => {
+const PeopleSingle: React.FC = (): JSX.Element => {
 
     const history = useHistory();
     let {id} = useParams<{ id: string | undefined }>();
@@ -168,3 +168,5 @@ export const PeopleSingle: React.FC = (): JSX.Element => {
         </Container>
     )
 }
+
+export default PeopleSingle;

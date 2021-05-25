@@ -1,15 +1,10 @@
 import React, {Fragment, useReducer} from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import Header from "./components/Templates/Header"
 import Login from "./components/Login";
-import Search from "./components/Search";
 import {initialStateLogin, loginReducer} from "./reducers/Login.reducer";
-import {PeopleSingle} from "./components/Singles/People.single";
-import {FilmsSingle} from "./components/Singles/Films.single";
-import {PlanetsSingle} from "./components/Singles/Planets.single";
-import {SpeciesSingle} from "./components/Singles/Species.single";
-import {StarshipsSingle} from "./components/Singles/Starships.single";
-import {VehiclesSingle} from "./components/Singles/Vehicles.single";
+import appRoutesArray from './Routes';
+import Router from "./hooks/Router.hooks";
 
 function App() {
 
@@ -33,7 +28,8 @@ function App() {
                         <Fragment>
                             <Header user={user} dispatch={dispatch}/>
                             <main>
-                                <Route exact path="/search">
+                                <Router routes={appRoutesArray} />
+                                {/*<Route exact path="/search">
                                     <Search />
                                 </Route>
                                 <Route path="/people/:id">
@@ -53,7 +49,7 @@ function App() {
                                 </Route>
                                 <Route path="/vehicle/:id">
                                     <VehiclesSingle />
-                                </Route>
+                                </Route>*/}
                             </main>
                         </Fragment>
                     )

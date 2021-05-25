@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {Container, Row, Col, CardColumns, Card, ListGroup} from "react-bootstrap";
 import {LinkModels} from "../../models/Link.models";
 
-export const SpeciesSingle: React.FC = (): JSX.Element => {
+const SpeciesSingle: React.FC = (): JSX.Element => {
 
     let {id} = useParams<{ id: string | undefined }>();
     const [error, setError] = useState<{ isError: boolean, reason: string }>({isError: false, reason: ""});
@@ -108,3 +108,5 @@ export const SpeciesSingle: React.FC = (): JSX.Element => {
         </Container>
     )
 }
+
+export default SpeciesSingle;

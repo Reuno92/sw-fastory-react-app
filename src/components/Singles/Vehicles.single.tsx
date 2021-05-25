@@ -5,7 +5,7 @@ import {Alert, Card, CardColumns, Col, Container, Row} from "react-bootstrap";
 import {LinkModels} from "../../models/Link.models";
 import {FaEmpire} from "react-icons/fa";
 
-export const VehiclesSingle: React.FC = (): JSX.Element => {
+const VehiclesSingle: React.FC = (): JSX.Element => {
 
     let {id} = useParams<{ id: string | undefined }>();
     const [error, setError] = useState<{ isError: boolean, reason: string }>({isError: false, reason: ""});
@@ -149,3 +149,5 @@ export const VehiclesSingle: React.FC = (): JSX.Element => {
         </Container>
     )
 }
+
+export default VehiclesSingle;

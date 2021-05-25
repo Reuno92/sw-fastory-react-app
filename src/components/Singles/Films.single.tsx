@@ -5,7 +5,7 @@ import {CardColumns, Card, Col, Container, Row, Spinner} from "react-bootstrap";
 import {formatDistance, formatRelative, subDays} from 'date-fns';
 import {LinkModels} from "../../models/Link.models";
 
-export const FilmsSingle: React.FC = (): JSX.Element => {
+const FilmsSingle: React.FC = (): JSX.Element => {
 
     let {id} = useParams<{ id: string | undefined }>();
     const [error, setError] = useState<{ isError: boolean, reason: string }>({isError: false, reason: ""});
@@ -195,3 +195,5 @@ export const FilmsSingle: React.FC = (): JSX.Element => {
         </Container>
     )
 }
+
+export default FilmsSingle;

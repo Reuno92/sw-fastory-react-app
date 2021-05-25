@@ -40,8 +40,8 @@ The Empire's database is accessible at this [URL](https://swapi.dev/).
 ##### Optional
 
 * Authentication system that must verify
-        * user: Luke
-        * password: DadSucks
+    * user: Luke
+    * password: DadSucks
 * The use of HAPI because the rebellion developers like it.
 
 #### Step 2
