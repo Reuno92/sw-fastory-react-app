@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
 import {AppRoute} from "../Routes";
-import RoutesWithSubRoutes from "./RoutesWithSubRoutes";
+import RoutesWithSubRoutesHooks from "./RoutesWithSubRoutes.hooks";
 
 type RouterHooksType = {
     routes: Array<AppRoute>
@@ -12,7 +12,7 @@ const Router: React.FC<RouterHooksType> = ({ routes }) => {
             {
                 routes.map(
                     (route: AppRoute) =>
-                        <RoutesWithSubRoutes
+                        <RoutesWithSubRoutesHooks
                             {...route}
                         />
                 )

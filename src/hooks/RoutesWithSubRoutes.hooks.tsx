@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {AppRoute} from "../Routes";
 
-const RoutesWithSubRoutes = (route: AppRoute) => {
+const RoutesWithSubRoutesHooks = (route: AppRoute) => {
     /* Authenticated flag */
     const authenticated: boolean = true;
 
@@ -23,4 +23,4 @@ const RoutesWithSubRoutes = (route: AppRoute) => {
     );
 }
 
-export default RoutesWithSubRoutes;
+export default RoutesWithSubRoutesHooks;
